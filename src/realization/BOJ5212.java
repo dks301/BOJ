@@ -83,11 +83,13 @@ public class BOJ5212 {
 			}
 		}
 		
+		StringBuilder sb = new StringBuilder();
 		for (i = RS; i < RE + 1; i++) {
 			for (j = CS; j < CE + 1; j++) {
-				System.out.print(map2[i][j]);
+				sb.append(map2[i][j]);
 			}
-			System.out.println();
+			sb.append("\n");
 		}
+		System.out.println(sb.toString());
 	}
 }
