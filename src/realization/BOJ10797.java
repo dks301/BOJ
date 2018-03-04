@@ -1,4 +1,4 @@
-package myPackage;
+package realization;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 
 public class BOJ10797 {
 	private static final String SPACE = " ";
-	private static final String ENTER = " ";
 	
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
