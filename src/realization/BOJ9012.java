@@ -18,17 +18,17 @@ public class BOJ9012 {
 			boolean isYes = true;
 			
 			for (int j = 0; j < str.length; j++) {
-				if (str[j] == ')' && s.isEmpty()) {
-					isYes = false;
-					sb.append("NO").append(NEW_LINE);
-					break;
-				}
-				else if (str[j] == ')' && !s.isEmpty())
-					s.pop();
-				
-				else if (str[j] == '(')
+				if (str[j] == '(')
 					s.push(true);
-				
+				else {
+					if (s.isEmpty()) {
+						isYes = false;
+						sb.append("NO").append(NEW_LINE);
+						break;						
+					}
+					else
+						s.pop();
+				}
 			}
 			if (isYes && s.isEmpty())
 				sb.append("YES").append(NEW_LINE);
