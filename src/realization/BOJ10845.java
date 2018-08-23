@@ -17,7 +17,6 @@ public class BOJ10845 {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			
 			switch (st.nextToken()) {
 			case "push":
 				q.offer(Integer.parseInt(st.nextToken()));
