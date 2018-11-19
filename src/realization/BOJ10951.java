@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/*
+ * Tip! TC의 갯수가 정해져 있지 않다는 것은 Ctrl+z 으로 프로그램 종료를 의미 
+ * */
+
 public class BOJ10951 {
 	private static final String NEW_LINE = "\n";
 	
