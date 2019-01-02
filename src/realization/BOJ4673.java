@@ -1,4 +1,4 @@
-package success;
+package realization;
 
 public class BOJ4673 {
 	private static final String NEW_LINE = "\n";

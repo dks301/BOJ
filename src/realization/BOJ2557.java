@@ -1,4 +1,4 @@
-package success;
+package realization;
 
 public class BOJ2557 {
 	public static void main(String[] args) throws Exception {
