@@ -30,11 +30,18 @@ public class BOJ1993 {
 			}
 			double[][] arr = new double[n + 1][n + 1];
 			for (int i = 0; i <= n; i++) {
+				for (int j = 0; j < i; j++) {
+					System.out.print("                 ");
+				}
 				for (int j = i + 1; j <= n; j++) {
 					arr[i][j] = Math.sqrt(Math.pow(p[i].x - p[j].x, 2) + Math.pow(p[i].y - p[j].y, 2));
-					System.out.printf("%.2f  ", arr[i][j]);
+					System.out.printf("[(%d,%d) %.2f]  ", i, j, arr[i][j]);
 				}
 				System.out.println();
+			}
+			
+			for (int i = 0; i <= n; i++) {
+				
 			}
 			
 			String temp;
