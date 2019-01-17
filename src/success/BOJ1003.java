@@ -11,7 +11,7 @@ public class BOJ1003 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
-		
+		// BOJ1003
 		int[] fib = new int[41];
 		fib[0] = 0;
 		fib[1] = 1;
