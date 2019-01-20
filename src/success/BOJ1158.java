@@ -17,26 +17,20 @@ public class BOJ1158 {
 		int N = Integer.parseInt(st.nextToken()); // 1 <= N <= 5,000
 		int M = Integer.parseInt(st.nextToken()); // <= N
 		Queue<Integer> q = new LinkedList<Integer>();
-		int count = 1;
 		for (int i = 1; i <= N; i++) {
 			q.add(i);
 		}
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<");
-		while (!q.isEmpty()) {
-			if (count == M) {
-				count = 1;
-				sb.append(q.poll());
-				if (!q.isEmpty()) {
-					sb.append(COMMA).append(SPACE);
-				}
-			} else {
+		for (int i = 0; i < N - 1; i++) {
+			for (int j = 0; j < M - 1; j++) {
 				q.add(q.poll());
-				count++;
 			}
+			sb.append(q.poll()).append(COMMA).append(SPACE);
 		}
-		sb.append(">");
+		sb.append(q.poll()).append(">");
+		
 		System.out.println(sb.toString());
 	}
 }
