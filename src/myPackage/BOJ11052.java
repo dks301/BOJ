@@ -9,25 +9,21 @@ public class BOJ11052 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		int max = 0;
-		P[] P = new P[N + 1];
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 1; i <= N; i++) {
-			P[i] = new P(i, Integer.parseInt(st.nextToken()));
-			if (max < P[i].value) {
-				max = P[i].value;
-			}
-		}
-	}
-	static class P {
-		int idx;
-		int value;
-		double price;
+		int[] p = new int[N + 1];
+		int[] d = new int[N + 1];
 		
-		public P(int idx, int price) {
-			this.idx = idx;
-			this.price = price;
-			this.value = price / idx;
+		p[0] = 0;
+		d[0] = 0;
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		p[1] = Integer.parseInt(st.nextToken());
+		d[1] = p[1];
+		for (int i = 2; i <= N; i++) {
+			p[i] = Integer.parseInt(st.nextToken());
+			d[i] = Math.max(d[i - 1] + d[1], p[i]);
+			System.out.print("P[" + i + "]: " + p[i]);
+			System.out.println(" D[" + i + "]: " + d[i]);
 		}
+		System.out.println(d[N]);
 	}
 }
