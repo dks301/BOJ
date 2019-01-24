@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 public class BOJ1993 {
 	private static final String NEW_LINE = "\n";
 	private static final String SPACE = " ";
-	/* 점수가 낮은 순으로 버리기! */
+	/* 점수가 낮은 순으로 버리기!  */
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
