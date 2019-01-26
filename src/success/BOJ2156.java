@@ -1,4 +1,4 @@
-package myPackage;
+package success;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,9 +20,13 @@ public class BOJ2156 {
 		d[1][0] = 0;
 		d[1][1] = podo[1];
 		for (int i = 2; i <= n; i++) {
-			d[i][0] = d[i - 1][1] + d[i - 2][1];
-			d[i][1] = Math.max(d[i - 1][1] + podo[i], d[i - 2][1] + podo[i]);
-			System.out.println("d[" + i + "][0]: " + d[i][0] + " d[" + i + "][1]: " + d[i][1]);
+			d[i][0] = d[i - 1][1];
+			d[i][1] = max(d[i - 2][0] + podo[i - 1] + podo[i], d[i - 1][0] + podo[i], d[i - 1][1]);
 		}
+		System.out.println(d[n][1]);
+	}
+	
+	public static int max(int a, int b, int c) {
+		return a > b ? (a > c ? a : c) : (b > c ? b : c);
 	}
 }
