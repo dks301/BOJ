@@ -1,4 +1,4 @@
-package myPackage;
+package success;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,14 +17,19 @@ public class BOJ11053 {
 		}
 		
 		int[] d = new int[N + 1];
-		d[1] = 1;
-		int maxIdx = 1;
-		for (int i = 2; i <= N; i++) {
-			if (A[i] > A[maxIdx]) {
-				d[i] = d[maxIdx] + 1;
-				maxIdx = i;
+		int maxIdx = 0;
+		for (int i = 1; i <= N; i++) {
+			if (A[i] > d[maxIdx]) {
+				d[++maxIdx] = A[i];
+			} else {
+				for (int j = 1; j <= maxIdx; j++) {
+					if (d[j] >= A[i]) {
+						d[j] = A[i];
+						break;
+					}
+				}
 			}
 		}
-		System.out.println(d[maxIdx]);
+		System.out.println(maxIdx);
 	}
 }
