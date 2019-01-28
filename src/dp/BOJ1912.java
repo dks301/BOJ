@@ -1,4 +1,4 @@
-package myPackage;
+package dp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,5 +16,14 @@ public class BOJ1912 {
 			a[i] = Integer.parseInt(st.nextToken());
 		}
 		
+		int[] d = new int[n + 1];
+		int max = -1000;
+		for (int i = 1; i <= n; i++) {
+			d[i] = d[i - 1] > 0 ? d[i - 1] + a[i] : a[i];
+			if (max < d[i]) {
+				max = d[i];
+			}
+		}
+		System.out.println(max);
 	}
 }
