@@ -1,4 +1,4 @@
-package myPackage;
+package math;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,7 +9,7 @@ public class BOJ2745 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		char[] N = st.nextToken().toCharArray();
-		int B = Integer.parseInt(br.readLine());
+		int B = Integer.parseInt(st.nextToken());
 		
 		int result = 0;
 		int len = N.length;
