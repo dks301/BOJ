@@ -3,7 +3,10 @@ package dp;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 집들을 RGB 색 중 하나로 칠하는 최솟값 찾기
+ * 이웃하는 집은 같은색X
+ */
 public class BOJ1149 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br=  new BufferedReader(new InputStreamReader(System.in));
