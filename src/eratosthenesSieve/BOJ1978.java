@@ -15,7 +15,7 @@ public class BOJ1978 {
 		isNotPrime[1] = true;
 		for (int i = 2; i < 1001; i++) {
 			if (!isNotPrime[i]) {
-				for (int j = i + i; j < 1001; j += i) {
+				for (int j = i * i; j < 1001; j += i) {
 					isNotPrime[j] = true;
 				}
 			}
