@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 /*
  * 조합 0의 갯수
- * nCm의 끝자리 0의 갯수 구하기
+ * nCm의 끝자리 0의 갯수 구하기 
  * https://ksj14.tistory.com/entry/BackJoon1676-%ED%8C%A9%ED%86%A0%EB%A6%AC%EC%96%BC-0%EC%9D%98-%EA%B0%9C%EC%88%98
  */
 public class BOJ2004 {
