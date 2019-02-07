@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
  * 나이순 정렬
  * 나이순 오름차순
  * 나이가 같으면 가입한 순서대로
+ * tip! ArrayList가 아니면 for each문이 속도가 더 빠름
  */
 public class BOJ10814 {
 	private static final String SPACE = " ";
@@ -26,8 +27,8 @@ public class BOJ10814 {
 		Arrays.sort(u);
 		
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < N; i++) {
-			sb.append(u[i].age).append(SPACE).append(u[i].name).append(NEW_LINE);
+		for (User user : u) {
+			sb.append(user.age).append(SPACE).append(user.name).append(NEW_LINE);
 		}
 		System.out.println(sb.toString());
 	}
