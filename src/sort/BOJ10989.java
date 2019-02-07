@@ -14,14 +14,20 @@ public class BOJ10989 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		
-		int[] num = new int[N];
+		int[] num = new int[10001];
 		for (int i = 0; i < N; i++) {
-			num[i] = Integer.parseInt(br.readLine());
+			int temp = Integer.parseInt(br.readLine());
+			num[temp]++;
 		}
-		Arrays.sort(num);
+
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < N; i++) {
-			sb.append(num[i]).append(NEW_LINE);
+		int cnt = 0;
+		for (int n : num) {
+			if (n > 0) {
+				for (int i = 0; i < n; i++)
+				sb.append(cnt).append(NEW_LINE);	
+			}
+			cnt++;
 		}
 		System.out.println(sb.toString());
 	}
