@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 /*
- * ������ RGB �� �� �ϳ��� ĥ�ϴ� �ּڰ� ã��
- * �̿��ϴ� ���� ������X
+ * RGB거리
+ * 모든 집을 RGB중 하나로 칠해야함, 모든 이웃은 같은색으로 칠할 수 없다
+ * 각 집을 R, G, B로 칠할 때 드는 비용이 주어질 때, 모든 집을 칠할 때 드는 비용의 최솟값 출력
  */
 public class BOJ1149 {
 	public static void main(String[] args) throws Exception {

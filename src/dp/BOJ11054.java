@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 가장 긴 바이토닉 부분 수열
+ * S1 < S2 < ... Sk-1 < Sk > Sk+1 > ... Sn-1 > Sn = 바이토닉 수열
+ */
 public class BOJ11054 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

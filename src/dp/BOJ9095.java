@@ -3,7 +3,10 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 1, 2, 3 더하기
+ * 정수 n을 1, 2, 3의 합으로 나타내는 방법의 수 출력
+ */
 public class BOJ9095 {
 	private static final String NEW_LINE = "\n";
 	

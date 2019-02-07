@@ -2,7 +2,11 @@ package eratosthenesSieve;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/*
+ * 베르트랑 공준
+ * 임의의 자연수 n에 대하여, n보다 크고 2n보다 작거나 같은 소수는 적어도 하나 존재한다(= 베르트랑 공준)
+ * n이 주어졌을 때, n보다 크고 2n보다 작거나 같은 소수의 갯수 출력
+ */
 public class BOJ4948 {
 	private static final String ENTER = "\n";
 	private static final int MAX = 246912; // max 2n(n <= 123456)

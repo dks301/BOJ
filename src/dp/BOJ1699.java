@@ -3,7 +3,10 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 제곱수의 합
+ * 주어진 자연수 N을 제곱수들의 합으로 표현할 때 최소 항의 갯수 출력
+ */
 public class BOJ1699 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -2,7 +2,11 @@ package dp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/*
+ * 암호코드
+ * A=1, B=2, ..., Z=26이라고 한다.
+ * 5000자리 이하의 숫자암호가 주어질 때, 암호를 해석할 수 있는 경우의 수 출력 
+ */
 public class BOJ2011 {
 	private static final int MOD = 1_000_000;
 

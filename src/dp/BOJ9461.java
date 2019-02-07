@@ -2,7 +2,11 @@ package dp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/*
+ * 파도반 수열
+ * 문제 그림참고, P(1 ~ 10) = 1, 1, 1, 2, 2, 3, 4, 5, 7, 9
+ * P(N) 출력
+ */
 public class BOJ9461 {
 	private static final String NEW_LINE = "\n";
 	

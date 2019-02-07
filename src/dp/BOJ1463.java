@@ -3,7 +3,13 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 1로 만들기
+ * 1. X가 3으로 나누어 떨어지면, 3으로 나눈다.
+ * 2. X가 2로 나누어 떨어지면, 2로 나눈다.
+ * 3. 1을 뺀다.
+ * 정수 N에 위 연산 3개를 적절히 사용해서 1을 만드는 최소 연산의 수 출력
+ */
 public class BOJ1463 {
 	private static final int MAX = 1000001;
 	

@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 스티커
+ * 스티커 한 장을 떼면, 그 스티커와 변을 공유하는 스티커는 모두 찢어진다.
+ * 스티커 2n개 중 여러개를 뗄 때, 스티커 점수의 최댓값을 출력  
+ */
 public class BOJ9465 {
 	private static final String NEW_LINE = "\n";
 	

@@ -3,7 +3,10 @@ package dp;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 합분해
+ * 0부터 N까지 정수 K개를 더해서 그 합이 N이되는 경우의 수 출력
+ */
 public class BOJ2225 {
 	private static final int MOD = 1_000_000_000;
 	

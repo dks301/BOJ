@@ -3,13 +3,17 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 쉬운 계단 수
+ * 인접한 모든 자리수의 차이가 1이나는 수 = 계단 수 (ex.45656)
+ * 길이가 N인 계단수 출력
+ */
 public class BOJ10844 {
 	public static final int MOD = 1_000_000_000;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		int[][] d = new int[N + 1][10]; //0<=j<=9: �������ڸ��� j�� ����
+		int[][] d = new int[N + 1][10]; //0<=j<=9: �������ڸ��� j�� ����
 		d[1][0] = 0;
 		for (int i = 1; i < 10; i++) {
 			d[1][i] = 1;

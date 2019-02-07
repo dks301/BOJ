@@ -2,7 +2,11 @@ package bruteForce;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/*
+ * 한수
+ * 어떤 양의 정수 X의 자릿수가 등차수열 = 한수
+ * 1보다 크거나 같고, N보다 작거나 같은 한수의 갯수 출력
+ */
 public class BOJ1065 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

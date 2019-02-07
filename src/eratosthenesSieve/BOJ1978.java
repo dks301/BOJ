@@ -3,7 +3,10 @@ package eratosthenesSieve;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 소수 찾기
+ * 주어진 수들 중 소수의 갯수 출력
+ */
 public class BOJ1978 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

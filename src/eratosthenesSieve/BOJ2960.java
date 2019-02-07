@@ -3,7 +3,10 @@ package eratosthenesSieve;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 에라토스테네스의 체
+ * N, K가 주어졌을 때, K번쨰 지우는 수 출력
+ */
 public class BOJ2960 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

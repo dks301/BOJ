@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 카드 구매하기
+ * 카드 N개를 구매하기 위해 지불해야하는 금액의 최댓값 출력
+ */
 public class BOJ11052 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

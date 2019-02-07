@@ -3,7 +3,11 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 오르막 수
+ * 수의 자리가 오름차순을 이루는 수, 인접한 수가 같아도 오름차순
+ * 수의 길이가 N일 때, 오르막 수의 갯수 출력
+ */
 public class BOJ11057 {
 	private static final int MOD = 10_007;
 	public static void main(String[] args) throws IOException {

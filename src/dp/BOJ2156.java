@@ -3,7 +3,12 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 포도주 시식
+ * 1. 포도주 잔을 선택하면 그 잔의 포도주는 모두 마셔야하고, 마신 후에는 원래 위치에 놓아야 함.
+ * 2. 연속으로 놓여 있는 3잔을 모두 마실 순 없다.
+ * 위 2조건을 만족하면서 최대로 마실 수 있는 포도주의 양 출력 
+ */
 public class BOJ2156 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

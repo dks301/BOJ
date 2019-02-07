@@ -2,7 +2,10 @@ package eratosthenesSieve;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/*
+ * 소수
+ * M이상 N이하의 자연수 중 소수를 찾아서 합과 그 중 가장 작은 소수 찾기 
+ */
 public class BOJ2581 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

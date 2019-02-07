@@ -3,7 +3,10 @@ package dp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+/*
+ * 2xn 타일링2
+ * 2xn 직사각형을 2x1, 2x2타일로 채우는 방법의 수 출력
+ */
 public class BOJ11727 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
