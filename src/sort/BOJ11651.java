@@ -5,6 +5,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/*
+ * y 오름차순 정렬
+ * y가 같으면 x 오름차순
+ */
 public class BOJ11651 {
 	private static final String SPACE = " ";
 	private static final String NEW_LINE = "\n";
