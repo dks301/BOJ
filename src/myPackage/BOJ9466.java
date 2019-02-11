@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
  */
 public class BOJ9466 {
 	private static final String NEW_LINE = "\n";
-	private static boolean[] check;
-	private static boolean[] cycle;
+	private static int[] check;
+	private static int[] cycle;
 	private static int[] a;
 
 	public static void main(String[] args) throws Exception {
@@ -24,34 +24,34 @@ public class BOJ9466 {
 		while (T-- > 0) {
 			int n = Integer.parseInt(br.readLine());
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			check = new boolean[n + 1];
+			check = new int[n + 1];
 			a = new int[n + 1];
-			cycle = new boolean[n + 1];
+			cycle = new int[n + 1];
 			for (int i = 1; i <= n; i++) {
 				a[i] = Integer.parseInt(st.nextToken());
 			}
 			
 			int ans = 0;
 			for (int i = 1; i <= n; i++) {
-				if (check[i] == false) {
-					ans += dfs(i);
+				if (check[i] == 0) {
+					ans += dfs(i, 1, i);
 				}
 			}
-			sb.append(ans).append(NEW_LINE);
+			sb.append(n - ans).append(NEW_LINE);
 		}
 		System.out.println(sb);
 	}
 	
-	public static int dfs(int x) {
-		if (check[x] != false) {
-			if (cycle[x] != false) {
+	public static int dfs(int x, int cnt, int step) {
+		if (check[x] != 0) {
+			if (step != cycle[x]) {
 				return 0;
 			}
-			return 1;
+			return cnt - check[x];
 		}
-		check[x] = true;
-		cycle[x] = true;
+		check[x] = cnt;
+		cycle[x] = step;
 		
-		return dfs(a[x]);
+		return dfs(a[x], cnt + 1, step);
 	}
 }
