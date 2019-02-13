@@ -12,16 +12,16 @@ import java.util.StringTokenizer;
  */
 public class BOJ1991 {
 	private static Node[] node;
-	
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		node = new Node[N + 1];
-		
+		node = new Node[N];
+
 		while (N-- > 0) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			char name = st.nextToken().charAt(0);
-			node[name - 'A'] = new Node(name, st.nextToken().charAt(0), st.nextToken().charAt(0));
+			String temp = br.readLine();
+			char name = temp.charAt(0);
+			node[name - 'A'] = new Node(name, temp.charAt(2), temp.charAt(4));
 		}
 		ArrayList<Character> al = preorder(0);
 		StringBuilder sb = new StringBuilder();
@@ -29,76 +29,67 @@ public class BOJ1991 {
 			sb.append(next);
 		}
 		sb.append("\n");
-		
+
 		al = inorder(0);
 		for (char next : al) {
 			sb.append(next);
 		}
 		sb.append("\n");
-		
+
 		al = postorder(0);
 		for (char next : al) {
 			sb.append(next);
 		}
 		System.out.println(sb);
 	}
-	
+
 	public static ArrayList<Character> preorder(int i) { // 노드 -> 왼쪽 -> 오른쪽
 		ArrayList<Character> al = new ArrayList<>();
+		if (i == -19) { // '.' - 'A' = -19
+			return al;
+		}
 		int left = node[i].left - 'A';
 		int right = node[i].right - 'A';
-		
-		if (node[i].name != '.') {
-			al.add(node[i].name);
-			if (node[i].left != '.') {
-				al.addAll(preorder(left));
-			}
-			if (node[i].right != '.') {
-				al.addAll(preorder(right));
-			}
-		}
+
+		al.add(node[i].name);
+		al.addAll(preorder(left));
+		al.addAll(preorder(right));
 		return al;
 	}
-	
+
 	public static ArrayList<Character> inorder(int i) { // 왼쪽 -> 노드 -> 오른쪽
 		ArrayList<Character> al = new ArrayList<>();
+		if (i == -19) {
+			return al;
+		}
 		int left = node[i].left - 'A';
 		int right = node[i].right - 'A';
-		
-		if (node[i].left != '.') {
-			al.addAll(inorder(left));
-		}
-		if (node[i].name != '.') {
-			al.add(node[i].name);
-			if (node[i].right != '.') {
-				al.addAll(inorder(right));
-			}
-		}
+
+		al.addAll(inorder(left));
+		al.add(node[i].name);
+		al.addAll(inorder(right));
 		return al;
 	}
-	
+
 	public static ArrayList<Character> postorder(int i) { // 왼쪽 -> 오른쪽 -> 노드
 		ArrayList<Character> al = new ArrayList<>();
+		if (i == -19) {
+			return al;
+		}
 		int left = node[i].left - 'A';
 		int right = node[i].right - 'A';
-		
-		if (node[i].left != '.') {
-			al.addAll(postorder(left));
-		}
-		if (node[i].right != '.') {
-			al.addAll(postorder(right));
-		}
-		if (node[i].name != '.') {
-			al.add(node[i].name);
-		}
+
+		al.addAll(postorder(left));
+		al.addAll(postorder(right));
+		al.add(node[i].name);
 		return al;
 	}
-	
+
 	public static class Node {
 		char name = '.';
 		char left = '.';
 		char right = '.';
-		
+
 		public Node(char name, char left, char right) {
 			this.name = name;
 			this.left = left;
