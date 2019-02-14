@@ -2,6 +2,7 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /*
@@ -12,9 +13,10 @@ import java.util.StringTokenizer;
  */
 public class BOJ9466 {
 	private static final String NEW_LINE = "\n";
-	private static int[] check;
 	private static int[] cycle;
 	private static int[] a;
+	private static ArrayList<Integer> al;
+	private static int num = 0;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,34 +26,39 @@ public class BOJ9466 {
 		while (T-- > 0) {
 			int n = Integer.parseInt(br.readLine());
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			check = new int[n + 1];
 			a = new int[n + 1];
 			cycle = new int[n + 1];
 			for (int i = 1; i <= n; i++) {
 				a[i] = Integer.parseInt(st.nextToken());
 			}
-			
-			int ans = 0;
+
 			for (int i = 1; i <= n; i++) {
-				if (check[i] == 0) {
-					ans += dfs(i, 1, i);
+				if (cycle[i] == 0) {
+					al = new ArrayList<>();
+					dfs(i);
 				}
 			}
-			sb.append(n - ans).append(NEW_LINE);
+
+			
+			sb.append(n - num).append(NEW_LINE);
 		}
 		System.out.println(sb);
 	}
-	
-	public static int dfs(int x, int cnt, int step) {
-		if (check[x] != 0) {
-			if (step != cycle[x]) {
-				return 0;
+
+	public static void dfs(int x) {
+		if (al.contains(x)) {
+			for (int i = al.indexOf(x); i < al.size(); i++) {
+				cycle[al.get(i)] = 1;
+				num++;
 			}
-			return cnt - check[x];
 		}
-		check[x] = cnt;
-		cycle[x] = step;
+		if (cycle[x] != 0) {
+			return;
+		}
 		
-		return dfs(a[x], cnt + 1, step);
+		al.add(x);
+		cycle[x] = -1;
+
+		dfs(a[x]);
 	}
 }
