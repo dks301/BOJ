@@ -1,4 +1,4 @@
-package myPackage;
+package bfs_dfs;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,10 +13,10 @@ import java.util.StringTokenizer;
  */
 public class BOJ9466 {
 	private static final String NEW_LINE = "\n";
-	private static int[] cycle;
+	private static int[] cycle; // 기본:0, 사이클x:-1, 사이클o:1
 	private static int[] a;
 	private static ArrayList<Integer> al;
-	private static int num = 0;
+	private static int ans;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,6 +28,7 @@ public class BOJ9466 {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			a = new int[n + 1];
 			cycle = new int[n + 1];
+			ans = 0;
 			for (int i = 1; i <= n; i++) {
 				a[i] = Integer.parseInt(st.nextToken());
 			}
@@ -38,27 +39,30 @@ public class BOJ9466 {
 					dfs(i);
 				}
 			}
-
-			
-			sb.append(n - num).append(NEW_LINE);
+			sb.append(n - ans).append(NEW_LINE);
 		}
 		System.out.println(sb);
 	}
 
 	public static void dfs(int x) {
-		if (al.contains(x)) {
-			for (int i = al.indexOf(x); i < al.size(); i++) {
-				cycle[al.get(i)] = 1;
-				num++;
-			}
-		}
 		if (cycle[x] != 0) {
+			if (al.contains(x)) {
+				boolean isNext = false;
+				for (int next : al) {
+					if (next == x) {
+						isNext = true;
+					}
+					if (isNext == true) {
+						cycle[next] = 1;
+						ans++;
+					}
+				}
+			}
 			return;
 		}
 		
 		al.add(x);
 		cycle[x] = -1;
-
 		dfs(a[x]);
 	}
 }
