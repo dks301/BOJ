@@ -1,9 +1,11 @@
-package myPackage;
+package queue;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
+import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 /*
@@ -25,16 +27,26 @@ public class BOJ1966 {
 			int N = Integer.parseInt(st.nextToken());
 			int M = Integer.parseInt(st.nextToken());
 			
-			PriorityQueue<Document> pq = new PriorityQueue<>();
+			Queue<Document> q = new LinkedList<>();
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < N; i++) {
-				pq.add(new Document(i, Integer.parseInt(st.nextToken())));
+				q.add(new Document(i, Integer.parseInt(st.nextToken())));
 			}
 			int cnt = 0;
-			while (!pq.isEmpty()) {
-				Document d = pq.remove();
+			while (!q.isEmpty()) {
+				Document d = q.remove();
 				cnt++;
-				if (d.idx == M) {
+				boolean isRemove = false;
+				for (Document next : q) {
+					if (d.importance < next.importance) {
+						q.add(d);
+						isRemove = true;
+						cnt--;
+						break;
+					}
+				}
+
+				if (d.idx == M && isRemove == false) {
 					break;
 				}
 			}
@@ -43,23 +55,13 @@ public class BOJ1966 {
 		System.out.println(sb);
 	}
 	
-	public static class Document implements Comparable<Document>{
+	public static class Document{
 		int idx;
 		int importance;
 		
 		public Document(int idx, int importance) {
 			this.idx = idx;
 			this.importance = importance;
-		}
-		
-		public int compareTo(Document that) {
-			if (this.importance < that.importance) {
-				return 1;
-			} else if (this.importance == that.importance) {
-				return 0;
-			} else {
-				return -1;
-			}
 		}
 	}
 }
