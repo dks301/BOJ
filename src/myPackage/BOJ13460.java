@@ -2,6 +2,8 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 /*
  * 구슬 탈출2
@@ -25,18 +27,38 @@ public class BOJ13460 {
 	public static final int ROW = 0;
 	public static final int COL = 1;
 	
+	public static int[][] check;
+	public static int cnt = 0;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		board = new char[N][M];
+		check = new int[N][M];
+		
 		for (int i = 0; i < N; i++) {
 			board[i] = br.readLine().toCharArray();
 			for (int j = 0; j < M; j++) {
-				System.out.print(board[i][j] + " ");
+				if (board[i][j] == WALL) {
+					check[i][j] = 1;
+				}
 			}
-			System.out.println();
+		}
+	}
+	
+	public static void bfs(int x, int y) {
+		Queue<Integer> q = new LinkedList<>();
+		q.add(x);
+		check[x][y] = 1;
+	}
+	
+	public static class Node {
+		int x, y;
+		
+		public Node(int x, int y) {
+			this.x = x;
+			this.y = y;
 		}
 	}
 }
