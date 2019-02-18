@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -17,6 +18,7 @@ import java.util.StringTokenizer;
  */
 public class BOJ16166 {
 	private static ArrayList<Integer>[] transfer;
+	private static ArrayList<Integer> check;
 	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
@@ -24,15 +26,23 @@ public class BOJ16166 {
 		int N = Integer.parseInt(br.readLine());
 		int[][] subway = new int[N + 1][10];
 		transfer = new ArrayList[N + 1]; // transfer[1] = 1호선에서 환승할 수 있는 호선들
+		check = new ArrayList<>();
+		HashMap<Integer, Integer> hm = new HashMap<>();
 		
 		ArrayList<Integer> startLine = new ArrayList<>(); // 서울역이 있는 호선들
 		for (int i = 1; i <= N; i++) {
 			transfer[i] = new ArrayList<>();
 			Arrays.fill(subway[i], -1);
+			
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int K = Integer.parseInt(st.nextToken());
 			for (int j = 0; j < K; j++) {
 				subway[i][j] = Integer.parseInt(st.nextToken());
+				if (hm.containsKey(subway[i][j])) {
+					hm.put(subway[i][j], hm.get(subway[i][j]) + 1);
+				} else {
+					hm.put(subway[i][j], i);
+				}
 				if (subway[i][j] == 0) {
 					startLine.add(i);
 				}
@@ -52,22 +62,31 @@ public class BOJ16166 {
 	public static void bfs(int[][] subway, int x) {
 		Queue<Integer> q = new LinkedList<>();
 		q.add(x);
-		ArrayList<Integer> currentLine = new ArrayList<>();
-		for (int i = 1; i < subway.length; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (subway[i][j] == x) {
-					currentLine.add(i);
-				}
-			}
-		}
+		check.add(x);
+//		ArrayList<Integer> currentLine = new ArrayList<>();
+//		for (int i = 1; i < subway.length; i++) {
+//			for (int j = 0; j < 10; j++) {
+//				if (subway[i][j] == x) {
+//					currentLine.add(i);
+//				}
+//			}
+//		}
 		
 		while(!q.isEmpty()) {
 			int y = q.remove();
 			for (int i = 0; i < 10; i++) {
-				for (int next : currentLine) {
-					if (subway[next][i] != -1)
-				}
+				
 			}
+		}
+	}
+	
+	public static class Station {
+		int idx, line;
+		int[] transfer = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+		
+		public Station(int idx, int line) {
+			this.idx = idx;
+			this.line = line;
 		}
 	}
 }
