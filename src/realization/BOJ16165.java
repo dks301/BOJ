@@ -1,4 +1,4 @@
-package myPackage;
+package realization;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 /*
  * 걸그룹 마스터 준석이
  * 걸그룹의 수 N(0<N<100), 문제의 수M(0<M<100)
+ * 문제 유형별로 문제의 답 출력
  */
 public class BOJ16165 {
 	private static final String NEW_LINE = "\n";
@@ -19,14 +20,16 @@ public class BOJ16165 {
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		
+		String[] groupName = new String[N];
 		ArrayList<String>[] group = new ArrayList[N];
 		for (int i = 0; i < N; i++) {
+			groupName[i] = br.readLine();
 			group[i] = new ArrayList<>();
-			group[i].add(br.readLine());
 			int num = Integer.parseInt(br.readLine());
-			for (int j = 1; j <= num; j++) {
+			for (int j = 0; j < num; j++) {
 				group[i].add(br.readLine());
 			}
+			Collections.sort(group[i]);
 		}
 		
 		StringBuilder sb = new StringBuilder();
@@ -37,8 +40,8 @@ public class BOJ16165 {
 			switch (type) {
 			case 0:
 				for (int j = 0; j < N; j++) {
-					if (group[j].get(0).equals(quiz)) {
-						for (int k = 1; k < group[j].size(); k++) {
+					if (groupName[j].equals(quiz)) {
+						for (int k = 0; k < group[j].size(); k++) {
 							sb.append(group[j].get(k)).append(NEW_LINE);
 						}
 					}
@@ -48,7 +51,7 @@ public class BOJ16165 {
 				for (int j = 0; j < N; j++) {
 					for (String name : group[j]) {
 						if (name.equals(quiz)) {
-							sb.append(group[j].get(0)).append(NEW_LINE);
+							sb.append(groupName[j]).append(NEW_LINE);
 							break;
 						}
 					}
