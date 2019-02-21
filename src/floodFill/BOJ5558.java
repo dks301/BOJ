@@ -1,4 +1,4 @@
-package myPackage;
+package floodFill;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
