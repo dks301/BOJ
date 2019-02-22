@@ -26,8 +26,7 @@ public class BOJ15683 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		// 가장 많이 감시할 수 있는 것 찾고 그건 고정, 그 다음 이미 감시중인걸 빼고 가장 많이 감시할 수 있는것 찾고 고정
-		// 반복
+		
 		a = new int[N + 2][M + 2];
 		check = new boolean[N + 2][M + 2];
 
@@ -35,74 +34,113 @@ public class BOJ15683 {
 			Arrays.fill(a[i], 6);
 		}
 		
-		ArrayList<Camera> c1 = new ArrayList<>();
-		ArrayList<Camera> c2 = new ArrayList<>();
-		ArrayList<Camera> c3 = new ArrayList<>();
-		ArrayList<Camera> c4 = new ArrayList<>();
-		ArrayList<Camera> c5 = new ArrayList<>();
+		ArrayList<Camera> c = new ArrayList<>();
 		
 		for (int i = 1; i <= N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 1; j <= M; j++) {
 				a[i][j] = Integer.parseInt(st.nextToken());
 				
-				switch (a[i][j]) {
-				case 1:
-					c1.add(new Camera(i, j));
-					break;
-					
-				case 2:
-					c2.add(new Camera(i, j));
-					break;
-					
-				case 3:
-					c3.add(new Camera(i, j));
-					break;
-					
-				case 4:
-					c4.add(new Camera(i, j));
-					break;
-					
-				case 5:
-					c5.add(new Camera(i, j));
-					break;
-				}
+				c.add(new Camera(a[i][j], i, j));
 			}
 		}
 		
-		for (Camera next : c5) {
-			up(next);
-			down(next);
-			left(next);
-			right(next);
+		for (Camera next : c) {
+			switch (next.idx) {
+			case 1:
+				for (Camera next2 : c) {
+					
+				}
+				break;
+				
+			case 2:
+				break;
+				
+			case 3:
+				break;
+				
+			case 4:
+				break;
+				
+			case 5:
+				up(next, check);
+				down(next, check);
+				left(next, check);
+				right(next, check);
+				break;
+			}
 		}
-		for (Camera next : c4) {
-			up(next);
-			down(next);
-			left(next);
-			right(next);
-		}
-		for (Camera next : c3) {
-			up(next);
-			down(next);
-			left(next);
-			right(next);
-		}
-		for (Camera next : c2) {
-			up(next);
-			down(next);
-			left(next);
-			right(next);
-		}
-		for (Camera next : c1) {
-			up(next);
-			down(next);
-			left(next);
-			right(next);
-		}
+//		for (Camera next : c5) {
+//			up(next, check);
+//			down(next, check);
+//			left(next, check);
+//			right(next, check);
+//		}
+//		
+//		for (Camera next : c4) {
+//			boolean[][] temp = getCheck(check);
+//			up(next, temp);
+//			left(next, temp);
+//			right(next, temp);
+//			
+//			down(next);
+//			left(next);
+//			right(next);
+//			
+//			left(next);
+//			up(next);
+//			down(next);
+//			
+//			right(next);
+//			up(next);
+//			down(next);
+//		}
+//		for (Camera next : c3) {
+//			up(next);
+//			left(next);
+//			
+//			up(next);
+//			right(next);
+//			
+//			down(next);
+//			left(next);
+//			
+//			down(next);
+//			right(next);
+//		}
+//		for (Camera next : c2) {
+//			up(next);
+//			down(next);
+//			
+//			left(next);
+//			right(next);
+//		}
+//		for (Camera next : c1) {
+//			up(next);
+//			
+//			down(next);
+//			
+//			left(next);
+//			
+//			right(next);
+//		}
 	}
 
-	public static void up(Camera c) {
+	public static boolean[][] getCheck (boolean[][] c) {
+		int N = c.length;
+		int M = c[0].length;
+		boolean[][] temp = new boolean[N][M];
+		
+		for (int i = 1 ; i <= N - 2; i++) {
+			for (int j = 1; j <= M - 2; j++) {
+				temp[i][j] = c[i][j];
+			}
+		}
+		
+		return temp;
+	}
+	
+	public static void up(Camera c, boolean[][] check) {
 		Queue<Camera> q = new LinkedList<>();
 		q.add(c);
 		check[c.x][c.y] = true;
@@ -113,13 +151,13 @@ public class BOJ15683 {
 			int nextRow = c.x - 1;
 			int nextCol = c.y;
 			if (a[nextRow][nextCol] != 6) {
-				q.add(new Camera(nextRow, nextCol));
+				q.add(new Camera(c.idx, nextRow, nextCol));
 				check[nextRow][nextCol] = true;
 			}
 		}
 	}
 
-	public static void down(Camera c) {
+	public static void down(Camera c, boolean[][] check) {
 		Queue<Camera> q = new LinkedList<>();
 		q.add(c);
 		check[c.x][c.y] = true;
@@ -130,13 +168,13 @@ public class BOJ15683 {
 			int nextRow = c.x + 1;
 			int nextCol = c.y;
 			if (a[nextRow][nextCol] != 6) {
-				q.add(new Camera(nextRow, nextCol));
+				q.add(new Camera(c.idx, nextRow, nextCol));
 				check[nextRow][nextCol] = true;
 			}
 		}
 	}
 
-	public static void left(Camera c) {
+	public static void left(Camera c, boolean[][] check) {
 		Queue<Camera> q = new LinkedList<>();
 		q.add(c);
 		check[c.x][c.y] = true;
@@ -147,13 +185,13 @@ public class BOJ15683 {
 			int nextRow = c.x;
 			int nextCol = c.y - 1;
 			if (a[nextRow][nextCol] != 6) {
-				q.add(new Camera(nextRow, nextCol));
+				q.add(new Camera(c.idx, nextRow, nextCol));
 				check[nextRow][nextCol] = true;
 			}
 		}
 	}
 
-	public static void right(Camera c) {
+	public static void right(Camera c, boolean[][] check) {
 		Queue<Camera> q = new LinkedList<>();
 		q.add(c);
 		check[c.x][c.y] = true;
@@ -164,18 +202,21 @@ public class BOJ15683 {
 			int nextRow = c.x;
 			int nextCol = c.y + 1;
 			if (a[nextRow][nextCol] != 6) {
-				q.add(new Camera(nextRow, nextCol));
+				q.add(new Camera(c.idx, nextRow, nextCol));
 				check[nextRow][nextCol] = true;
 			}
 		}
 	}
 
-	public static class Camera {
+	public static class Camera { // 이거를 Node로 바꿔서 idx == 6이면 벽으로 설정하는것 고려
+		int idx;
 		int x, y;
 
-		public Camera(int x, int y) {
+		public Camera(int idx, int x, int y) {
+			this.idx = idx;
 			this.x = x;
 			this.y = y;
 		}
+		
 	}
 }
