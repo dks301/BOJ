@@ -64,38 +64,11 @@ public class BOJ15683 {
 			if (camera[i][0].idx != 5) {
 				for (int j = 0; j < cameraIdx; j++) {
 					for (int k = 0; k < cameraIdx; k++) {
-						for (int l = 0; l < )
+						for (int l = 0; l < cameraIdx; l++) {
+							
+						}
 					}
 				}
-			}
-		}
-		for (Camera next : c) {
-			switch (next.idx) {
-			case 5:
-				up(next, check);
-				down(next, check);
-				left(next, check);
-				right(next, check);
-				break;
-			}
-		}
-		
-		for (Camera next : c) {
-			switch (next.idx) {
-			case 1:
-				for (Camera next2 : c) {
-					
-				}
-				break;
-				
-			case 2:
-				break;
-				
-			case 3:
-				break;
-				
-			case 4:
-				break;
 			}
 		}
 		
