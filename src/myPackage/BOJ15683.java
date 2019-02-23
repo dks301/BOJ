@@ -34,14 +34,49 @@ public class BOJ15683 {
 			Arrays.fill(a[i], 6);
 		}
 		
-		ArrayList<Camera> c = new ArrayList<>();
+		Camera[][] camera = new Camera[8][4];
+		int cameraIdx = 0;
 		
 		for (int i = 1; i <= N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 1; j <= M; j++) {
 				a[i][j] = Integer.parseInt(st.nextToken());
-				
-				c.add(new Camera(a[i][j], i, j));
+				if (a[i][j] >= 1 && a[i][j] <= 5) {
+					camera[cameraIdx++][0] = new Camera(a[i][j], i, j);
+					camera[cameraIdx++][1] = new Camera(a[i][j], i, j);
+					camera[cameraIdx++][2] = new Camera(a[i][j], i, j);
+					camera[cameraIdx++][3] = new Camera(a[i][j], i, j);
+				}
+			}
+		}
+		
+		for (int i = 0; i < cameraIdx; i++) {
+			if (camera[i][0].idx == 5) {
+				up(camera[i][0], check);
+				down(camera[i][0], check);
+				left(camera[i][0], check);
+				right(camera[i][0], check);				
+			}
+		}
+		
+		boolean[][] temp = getCheck(check);
+		for (int i = 0; i < cameraIdx; i++) {
+			if (camera[i][0].idx != 5) {
+				for (int j = 0; j < cameraIdx; j++) {
+					for (int k = 0; k < cameraIdx; k++) {
+						for (int l = 0; l < )
+					}
+				}
+			}
+		}
+		for (Camera next : c) {
+			switch (next.idx) {
+			case 5:
+				up(next, check);
+				down(next, check);
+				left(next, check);
+				right(next, check);
+				break;
 			}
 		}
 		
@@ -61,15 +96,9 @@ public class BOJ15683 {
 				
 			case 4:
 				break;
-				
-			case 5:
-				up(next, check);
-				down(next, check);
-				left(next, check);
-				right(next, check);
-				break;
 			}
 		}
+		
 //		for (Camera next : c5) {
 //			up(next, check);
 //			down(next, check);
@@ -211,6 +240,7 @@ public class BOJ15683 {
 	public static class Camera { // 이거를 Node로 바꿔서 idx == 6이면 벽으로 설정하는것 고려
 		int idx;
 		int x, y;
+		boolean[] direction = new boolean[4]; // 0, 1, 2, 3 -> 4가지 방향
 
 		public Camera(int idx, int x, int y) {
 			this.idx = idx;
@@ -218,5 +248,30 @@ public class BOJ15683 {
 			this.y = y;
 		}
 		
+		public void rotate(int idx, boolean[][] c) {
+			switch (idx) {
+			case 1:
+				up(this, c);
+				
+				
+				break;
+				
+			case 2:
+				
+				break;
+				
+			case 3:
+				
+				break;
+				
+			case 4:
+				
+				break;
+				
+			case 5:
+				
+				break;
+			}
+		}
 	}
 }
