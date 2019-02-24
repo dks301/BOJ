@@ -124,6 +124,7 @@ public class BOJ15683 {
 //			
 //			left(next);
 //			
+		
 //			right(next);
 //		}
 	}
