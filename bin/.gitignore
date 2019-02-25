@@ -1,9 +1,11 @@
+/bfs_dfs/
 /bigInteger/
 /bruteForce/
 /dp/
 /eratosthenesSieve/
 /euclid/
 /findRules/
+/floodFill/
 /greedy/
 /linkedList/
 /math/
@@ -13,6 +15,4 @@
 /sort/
 /stack/
 /string/
-/bfs_dfs/
-/floodFill/
 /tree/
