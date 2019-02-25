@@ -1,9 +1,8 @@
-package myPackage;
+package realization;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -21,7 +20,6 @@ import java.util.StringTokenizer;
 public class BOJ16235 {
 	private static int[][] food; //양분지도
 	private static int[][] A; //로봇의 양분추가지도
-	private static int[][] map; // 나무의 수 지도
 	private static LinkedList<Tree> t = new LinkedList<>();
 	
 	private static final int[][] DIRECTIONS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
@@ -50,20 +48,15 @@ public class BOJ16235 {
 			}
 		}
 		
-		map = new int[N + 2][N + 2];
-		
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			int z = Integer.parseInt(st.nextToken());
 			t.add(new Tree(x, y, z));
-			map[x][y]++;
 		}
 		
 		for (int i = 0; i < K; i++) {
-			Collections.sort(t);
-			
 			spring(N);
 			
 			summer();
@@ -80,38 +73,32 @@ public class BOJ16235 {
 	}
 	
 	public static void spring(int N) {
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= N; j++) {
-				if (map[i][j] != 0) {
-					for (Tree next : t) {
-						if (next.x == i && next.y == j) {
-							if (next.z <= food[i][j]) {
-								food[i][j] -= next.z;
-								next.z++;
-							} else {
-								next.isDie = true;
-							}
-						}
-					}
-				}
+		for (Tree next : t) {
+			if (next.z <= food[next.x][next.y]) {
+				food[next.x][next.y] -= next.z;
+				next.z++;
+				
+			} else {
+				next.isDie = true;
 			}
 		}
 	}
 	
 	public static void summer() {
-		ArrayList<Tree> remove = new ArrayList<>();
+		Iterator<Tree> it = t.iterator();
 		
-		for (int i = 0; i < t.size(); i++) {
-			if (t.get(i).isDie == true) {
-				food[t.get(i).x][t.get(i).y] += (t.get(i).z / 2);
-				remove.add(t.get(i));
+		while (it.hasNext()) {
+			Tree next = it.next();
+
+			if (next.isDie == true) {
+				food[next.x][next.y] += (next.z / 2);
+				it.remove();
 			}
 		}
-		t.removeAll(remove);
 	}
 	
 	public static void fall(int N) {
-		ArrayList<Tree> sprout = new ArrayList<>();
+		LinkedList<Tree> sprout = new LinkedList<>();
 		
 		for (Tree next : t) {
 			if (next.z % 5 == 0) {
@@ -121,12 +108,14 @@ public class BOJ16235 {
 					
 					if (nextRow >= 1 && nextRow <= N && nextCol >= 1 && nextCol <= N) {
 						sprout.add(new Tree(nextRow, nextCol, 1));
-						map[nextRow][nextCol]++;
 					}
 				}
 			}
 		}
-		t.addAll(sprout);
+
+		for (Tree next : sprout) {
+			t.addFirst(next);	
+		}
 	}
 	
 	public static void winter(int N) {
@@ -137,7 +126,7 @@ public class BOJ16235 {
 		}
 	}
 	
-	public static class Tree implements Comparable<Tree> {
+	public static class Tree{
 		int x, y, z;
 		boolean isDie;
 		
@@ -146,16 +135,6 @@ public class BOJ16235 {
 			this.y = y;
 			this.z = z;
 			this.isDie = false;
-		}
-		
-		public int compareTo(Tree that) {
-			if (this.z < that.z) {
-				return -1;
-			} else if (this.z == that.z) {
-				return 0;
-			} else {
-				return 1;
-			}
 		}
 	}
 }
