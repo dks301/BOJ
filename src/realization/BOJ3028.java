@@ -43,26 +43,23 @@ public class BOJ3028 {
 	}
 	
 	public static void A() {
-		if (cup == 4) {
-			cup = (byte)(cup >> 1);
-		} else if (cup == 2) {
-			cup = (byte)(cup << 1);
+		if (cup == 1) {
+			return;
 		}
+		cup = (byte)(cup^6);
 	}
 	
 	public static void B() {
-		if (cup == 2) {
-			cup = (byte)(cup >> 1);
-		} else if (cup == 1) {
-			cup = (byte)(cup << 1);
+		if (cup == 4) {
+			return;
 		}
+		cup = (byte)(cup^3);
 	}
 	
 	public static void C() {
-		if (cup == 4) {
-			cup = (byte)(cup >> 2);
-		} else if (cup == 1) {
-			cup = (byte)(cup << 2);
+		if (cup == 2) {
+			return;
 		}
+		cup = (byte)(cup^5);
 	}
 }
