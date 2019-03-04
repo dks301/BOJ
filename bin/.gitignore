@@ -1,6 +1,7 @@
 /bfs_dfs/
 /bigInteger/
 /bruteForce/
+/deque/
 /dp/
 /eratosthenesSieve/
 /euclid/
@@ -12,9 +13,8 @@
 /myPackage/
 /queue/
 /realization/
+/simulation/
 /sort/
 /stack/
 /string/
 /tree/
-/simulation/
-/deque/
