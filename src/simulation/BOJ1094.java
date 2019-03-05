@@ -1,7 +1,8 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
 /*
  * 막대기
  * 초기에는 64cm 막대 하나만 가지고 있다.
@@ -14,6 +15,27 @@ import java.io.InputStreamReader;
 public class BOJ1094 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int X = Integer.parseInt(br.readLine());
 		
+		int pipe = 64;
+		LinkedList<Integer> list = new LinkedList<>();
+		list.add(64);
+		int total = 64;
+		
+		while (total > X) {
+			pipe /= 2;
+			list.removeFirst();
+			list.addFirst(pipe);
+			list.addFirst(pipe);
+			
+			total -= pipe;
+			if (total >= X) {
+				list.removeFirst();
+			} else {
+				total += pipe;
+			}
+		}
+		
+		System.out.println(list.size());
 	}
 }
