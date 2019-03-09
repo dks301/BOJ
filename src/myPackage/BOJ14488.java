@@ -13,6 +13,9 @@ import java.util.StringTokenizer;
  * 준오와 친구들이 모두 만날 수 있으면 1을, 그렇지 않으면 0을 출력
  */
 public class BOJ14488 {
+	private static double min;
+	private static double max;
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -23,29 +26,86 @@ public class BOJ14488 {
 		st = new StringTokenizer(br.readLine());
 		StringTokenizer st2 = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
-			s[i] = new Student(Integer.parseInt(st.nextToken()), Integer.parseInt(st2.nextToken()));
+			s[i] = new Student(Long.parseLong(st.nextToken()), Long.parseLong(st2.nextToken()));
 		}
 		
 		Arrays.sort(s);
-		int min = s[0].x;
-		int max = s[N - 1].x;
 		
-		for (int i = 0; i <=)
+		min = s[0].x;
+		max = s[N - 1].x;
+		
+		boolean isPossible = true;
+		for (int i = 0; i < N; i++) {
+			double dist = s[i].v * T * 10000;
+			
+			if (s[i].x <= min) {
+				isPossible = leftSide(s[i].x, dist);
+				
+			} else if (s[i].x > min && s[i].x < max) {
+				isPossible = middleSide(s[i].x, dist);
+				
+			} else {
+				isPossible = rightSide(s[i].x, dist);
+				
+			}
+			
+			if (isPossible == false) {
+				break;
+			}
+		}
+		
+		System.out.println(isPossible ? "1" : "0");
 	}
 	
-	public void inside() {
+	public static boolean leftSide(long pos, double dist) {
+		double temp = pos + dist;
 		
+		if (temp < min) {
+			return false;
+			
+		} else if (temp > max) {
+			return true;
+			
+		} else {
+			max = temp;
+			return true;
+		}
 	}
 	
-	public void outside() {
+	public static boolean middleSide(long pos, double dist) {
+		double tempLeft = pos - dist;
+		double tempRight = pos + dist;
 		
+		if (tempLeft > min) {
+			min = tempLeft;
+			
+		}
+		if (tempRight < max) {
+			max = tempRight;
+		}
+		return true;
+	}
+	
+	public static boolean rightSide(long pos, double dist) {
+		double temp = pos - dist;
+		
+		if (temp > max) {
+			return false;
+			
+		} else if (temp < min) {
+			return true;
+			
+		} else {
+			min = temp;
+			return true;
+		}
 	}
 	
 	public static class Student implements Comparable<Student> {
-		int x, v;
+		long x, v;
 		
-		public Student(int x, int v) {
-			this.x = x;
+		public Student(long x, long v) {
+			this.x = x * 10000;
 			this.v = v;
 		}
 
