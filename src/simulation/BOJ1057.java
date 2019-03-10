@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,27 +15,26 @@ import java.util.StringTokenizer;
  * 참가자의 수 N(1<=N<=100,000)
  */
 public class BOJ1057 {
-	private static int N;
-	private static int K;
-	private static int L;
-	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		L = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken());
+		int L = Integer.parseInt(st.nextToken());
 		
 		int round = 1;
 		while (N != 1) {
+			if ((K % 2 == 1 && L == K + 1) || (L % 2 == 1 && K == L + 1)) {
+				break;
+			}
+			
+			N = (N % 2 == 0 ? N / 2 : N / 2 + 1);
+			K = (K % 2 == 0 ? K / 2 : K / 2 + 1);
+			L = (L % 2 == 0 ? L / 2 : L / 2 + 1);
+			round++;
 			
 		}
-	}
-	
-	public static boolean vs(Player[] p) {
-		LinkedList<Integer> al = new LinkedList<>();
-		for (int i = 1; i <= p.length - 1; i += 2) {
-			al.addLast(arg0);
-		}
+		
+		System.out.println(round);
 	}
 }
