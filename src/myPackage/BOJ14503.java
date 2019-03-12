@@ -2,6 +2,8 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 /*
@@ -17,29 +19,88 @@ import java.util.StringTokenizer;
  * 빈 칸 0, 벽 1
  */
 public class BOJ14503 {
+	private static int N;
+	private static int M;
 	private static int[][] map;
 	private static boolean[][] check;
-	
-	private static final int[][] DIRECTIONS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-	private static final int ROW = 0;
-	private static final int COL = 1;
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 		
+		st = new StringTokenizer(br.readLine());
+		Robot r = new Robot(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
 		
+		map = new int[N][M];
+		check = new boolean[N][M];
+		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < M; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+	}
+	
+	public static void bfs(Robot r) {
+		Queue<Robot> q = new LinkedList<>();
+		q.add(r);
+		check[r.x][r.y] = true;
+		
+		while (!q.isEmpty()) {
+			r = q.remove();
+			
+			for (int i = 0; i < 4; i++) {
+				if (r.leftTurn()) {
+					
+					break;
+				}
+			}
+		}
 	}
 	
 	public static class Robot {
-		int x, y, d;
+		int x, y, d; // (0,북), (1,동), (2,남), (3, 서)
 		
 		public Robot(int x, int y, int d) {
 			this.x = x;
 			this.y = y;
 			this.d = d;
+		}
+		
+		public boolean leftTurn() {
+			switch (this.d) {
+			case 0:
+				this.d = 3;
+				if (check[this.x][this.y - 1] == false && map[this.x][this.y - 1] != 1) {
+					return true;
+				}
+				break;
+				
+			case 1:
+				this.d = 0;
+				if (check[this.x - 1][this.y] == false && map[this.x - 1][this.y] != 1) {
+					return true;
+				}
+				break;
+				
+			case 2:
+				this.d = 1;
+				if (check[this.x][this.y + 1] == false && map[this.x][this.y + 1] != 1) {
+					return true;
+				}
+				break;
+				
+			case 3:
+				this.d = 2;
+				if (check[this.x + 1][this.y] == false && map[this.x + 1][this.y] != 1) {
+					return true;
+				}
+				break;
+			}
+			
+			return false;
 		}
 	}
 }
