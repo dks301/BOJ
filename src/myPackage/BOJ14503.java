@@ -23,16 +23,17 @@ public class BOJ14503 {
 	private static int M;
 	private static int[][] map;
 	private static boolean[][] check;
-	
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		
+
 		st = new StringTokenizer(br.readLine());
-		Robot r = new Robot(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
-		
+		Robot r = new Robot(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
+				Integer.parseInt(st.nextToken()));
+
 		map = new int[N][M];
 		check = new boolean[N][M];
 		for (int i = 0; i < N; i++) {
@@ -41,66 +42,132 @@ public class BOJ14503 {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
+		
+		System.out.println(bfs(r));
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				System.out.print(check[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
-	
-	public static void bfs(Robot r) {
+
+	public static int bfs(Robot r) {
 		Queue<Robot> q = new LinkedList<>();
 		q.add(r);
 		check[r.x][r.y] = true;
-		
+		int cnt = 0;
+
 		while (!q.isEmpty()) {
 			r = q.remove();
-			
+
+			boolean isTrue = false;
 			for (int i = 0; i < 4; i++) {
-				if (r.leftTurn()) {
-					
+				if (isTrue == false) {
+					switch (r.d) {
+					case 0:
+						r.d = 3;
+						if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
+							isTrue = true;
+							q.add(new Robot(r.x, r.y - 1, r.d));
+							check[r.x][r.y - 1] = true;
+						}
+						break;
+
+					case 1:
+						r.d = 0;
+						if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
+							isTrue = true;
+							q.add(new Robot(r.x - 1, r.y, r.d));
+							check[r.x - 1][r.y] = true;
+						}
+						break;
+
+					case 2:
+						r.d = 1;
+						if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
+							isTrue = true;
+							q.add(new Robot(r.x, r.y + 1, r.d));
+							check[r.x][r.y + 1] = true;
+						}
+						break;
+
+					case 3:
+						r.d = 2;
+						if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
+							isTrue = true;
+							q.add(new Robot(r.x + 1, r.y, r.d));
+							check[r.x + 1][r.y] = true;
+						}
+						break;
+					}
+				}
+			}
+
+			if (isTrue == false) {
+				switch (r.d) {
+				case 0:
+					if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
+						isTrue = true;
+						q.add(new Robot(r.x, r.y + 1, r.d));
+					}
+					break;
+
+				case 1:
+					r.d = 0;
+					if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
+						isTrue = true;
+						q.add(new Robot(r.x + 1, r.y, r.d));
+					}
+					break;
+
+				case 2:
+					r.d = 1;
+					if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
+						isTrue = true;
+						q.add(new Robot(r.x, r.y - 1, r.d));
+					}
+					break;
+
+				case 3:
+					r.d = 2;
+					if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
+						isTrue = true;
+						q.add(new Robot(r.x - 1, r.y, r.d));
+					}
 					break;
 				}
 			}
+
+			if (isTrue == false) {
+				for (int i = 0; i < N; i++) {
+					for (int j = 0; j < M; j++) {
+						if (check[i][j] == true) {
+							cnt++;
+						}
+					}
+				}
+				return cnt;
+			}
 		}
+		
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				if (check[i][j] == true) {
+					cnt++;
+				}
+			}
+		}
+		return cnt;
 	}
-	
+
 	public static class Robot {
 		int x, y, d; // (0,북), (1,동), (2,남), (3, 서)
-		
+
 		public Robot(int x, int y, int d) {
 			this.x = x;
 			this.y = y;
 			this.d = d;
-		}
-		
-		public boolean leftTurn() {
-			switch (this.d) {
-			case 0:
-				this.d = 3;
-				if (check[this.x][this.y - 1] == false && map[this.x][this.y - 1] != 1) {
-					return true;
-				}
-				break;
-				
-			case 1:
-				this.d = 0;
-				if (check[this.x - 1][this.y] == false && map[this.x - 1][this.y] != 1) {
-					return true;
-				}
-				break;
-				
-			case 2:
-				this.d = 1;
-				if (check[this.x][this.y + 1] == false && map[this.x][this.y + 1] != 1) {
-					return true;
-				}
-				break;
-				
-			case 3:
-				this.d = 2;
-				if (check[this.x + 1][this.y] == false && map[this.x + 1][this.y] != 1) {
-					return true;
-				}
-				break;
-			}
-			
-			return false;
 		}
 	}
 }
