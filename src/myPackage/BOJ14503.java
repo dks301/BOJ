@@ -42,7 +42,7 @@ public class BOJ14503 {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
+
 		System.out.println(bfs(r));
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
@@ -107,33 +107,42 @@ public class BOJ14503 {
 			if (isTrue == false) {
 				switch (r.d) {
 				case 0:
-					if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
-						isTrue = true;
-						q.add(new Robot(r.x, r.y + 1, r.d));
+					while (r.y != M) {
+						if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
+							isTrue = true;
+							q.add(new Robot(r.x, r.y + 1, r.d));
+							break;
+						}
 					}
 					break;
 
 				case 1:
-					r.d = 0;
-					if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
-						isTrue = true;
-						q.add(new Robot(r.x + 1, r.y, r.d));
+					while (r.x != N) {
+						if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
+							isTrue = true;
+							q.add(new Robot(r.x + 1, r.y, r.d));
+							break;
+						}
 					}
 					break;
 
 				case 2:
-					r.d = 1;
-					if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
-						isTrue = true;
-						q.add(new Robot(r.x, r.y - 1, r.d));
+					while (r.y != 0) {
+						if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
+							isTrue = true;
+							q.add(new Robot(r.x, r.y - 1, r.d));
+							break;
+						}
 					}
 					break;
 
 				case 3:
-					r.d = 2;
-					if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
-						isTrue = true;
-						q.add(new Robot(r.x - 1, r.y, r.d));
+					while (r.x != 0) {
+						if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
+							isTrue = true;
+							q.add(new Robot(r.x - 1, r.y, r.d));
+							break;
+						}
 					}
 					break;
 				}
@@ -150,7 +159,7 @@ public class BOJ14503 {
 				return cnt;
 			}
 		}
-		
+
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (check[i][j] == true) {
