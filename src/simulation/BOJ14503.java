@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,6 +24,13 @@ public class BOJ14503 {
 	private static int[][] map;
 	private static boolean[][] check;
 
+	private static final int[][][] DIRECTIONS = { { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } }, // 서남동북
+			{ { -1, 0 }, { 0, -1 }, { 1, 0 }, { 0, 1 } }, // 북서남동
+			{ { 0, 1 }, { -1, 0 }, { 0, -1 }, { 1, 0 } }, // 동북서남
+			{ { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } } }; // 남동북서
+	private static final int ROW = 0;
+	private static final int COL = 1;
+
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -44,130 +51,55 @@ public class BOJ14503 {
 		}
 
 		System.out.println(bfs(r));
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(check[i][j] + " ");
-			}
-			System.out.println();
-		}
 	}
 
 	public static int bfs(Robot r) {
 		Queue<Robot> q = new LinkedList<>();
 		q.add(r);
 		check[r.x][r.y] = true;
-		int cnt = 0;
-
+		int ans = 1;
+		
 		while (!q.isEmpty()) {
 			r = q.remove();
-
+			int d = r.d;
+			
 			boolean isTrue = false;
-			for (int i = 0; i < 4; i++) {
-				if (isTrue == false) {
-					switch (r.d) {
-					case 0:
-						r.d = 3;
-						if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
-							isTrue = true;
-							q.add(new Robot(r.x, r.y - 1, r.d));
-							check[r.x][r.y - 1] = true;
-						}
-						break;
-
-					case 1:
-						r.d = 0;
-						if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
-							isTrue = true;
-							q.add(new Robot(r.x - 1, r.y, r.d));
-							check[r.x - 1][r.y] = true;
-						}
-						break;
-
-					case 2:
-						r.d = 1;
-						if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
-							isTrue = true;
-							q.add(new Robot(r.x, r.y + 1, r.d));
-							check[r.x][r.y + 1] = true;
-						}
-						break;
-
-					case 3:
-						r.d = 2;
-						if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
-							isTrue = true;
-							q.add(new Robot(r.x + 1, r.y, r.d));
-							check[r.x + 1][r.y] = true;
-						}
-						break;
-					}
+			for (final int[] DIRECTION : DIRECTIONS[d]) {
+				int nextRow = r.x + DIRECTION[ROW];
+				int nextCol = r.y + DIRECTION[COL];
+				r.leftTurn();
+				
+				if (check[nextRow][nextCol] == false && map[nextRow][nextCol] != 1) {
+					q.add(new Robot(nextRow, nextCol, r.d));
+					check[nextRow][nextCol] = true;
+					isTrue = true;
+					ans++;
+					break;
 				}
 			}
-
+			
 			if (isTrue == false) {
-				switch (r.d) {
-				case 0:
-					while (r.y != M) {
-						if (check[r.x][r.y + 1] == false && map[r.x][r.y + 1] != 1 && r.y < M) {
+				int cnt = 0;
+				for (final int[] DIRECTION : DIRECTIONS[d]) {
+					if (cnt == 1) {
+						int nextRow = r.x + DIRECTION[ROW];
+						int nextCol = r.y + DIRECTION[COL];
+						
+						if (map[nextRow][nextCol] != 1) {
+							q.add(new Robot(nextRow, nextCol, d));
 							isTrue = true;
-							q.add(new Robot(r.x, r.y + 1, r.d));
 							break;
 						}
 					}
-					break;
-
-				case 1:
-					while (r.x != N) {
-						if (check[r.x + 1][r.y] == false && map[r.x + 1][r.y] != 1 && r.x < N) {
-							isTrue = true;
-							q.add(new Robot(r.x + 1, r.y, r.d));
-							break;
-						}
-					}
-					break;
-
-				case 2:
-					while (r.y != 0) {
-						if (check[r.x][r.y - 1] == false && map[r.x][r.y - 1] != 1 && r.y > 0) {
-							isTrue = true;
-							q.add(new Robot(r.x, r.y - 1, r.d));
-							break;
-						}
-					}
-					break;
-
-				case 3:
-					while (r.x != 0) {
-						if (check[r.x - 1][r.y] == false && map[r.x - 1][r.y] != 1 && r.x > 0) {
-							isTrue = true;
-							q.add(new Robot(r.x - 1, r.y, r.d));
-							break;
-						}
-					}
-					break;
-				}
-			}
-
-			if (isTrue == false) {
-				for (int i = 0; i < N; i++) {
-					for (int j = 0; j < M; j++) {
-						if (check[i][j] == true) {
-							cnt++;
-						}
-					}
-				}
-				return cnt;
-			}
-		}
-
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				if (check[i][j] == true) {
 					cnt++;
 				}
 			}
+			
+			if (isTrue == false) {
+				return ans;
+			}
 		}
-		return cnt;
+		return -1;
 	}
 
 	public static class Robot {
@@ -177,6 +109,26 @@ public class BOJ14503 {
 			this.x = x;
 			this.y = y;
 			this.d = d;
+		}
+		
+		public void leftTurn() {
+			switch (d) {
+			case 0:
+				d = 3;
+				break;
+				
+			case 1:
+				d = 0;
+				break;
+				
+			case 2:
+				d = 1;
+				break;
+				
+			case 3:
+				d = 2;
+				break;
+			}
 		}
 	}
 }
