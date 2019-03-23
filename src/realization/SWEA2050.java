@@ -3,17 +3,17 @@ package realization;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class SEA2046 {
-	private static final String STAMP = "#";
+public class SWEA2050 {
+	private static final String SPACE = " ";
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
+		char[] in = br.readLine().toCharArray();
 		
 		StringBuilder sb = new StringBuilder();
-		while (n-- > 0) {
-			sb.append(STAMP);
+		for (int i = 0; i < in.length; i++) {
+			sb.append((int)(in[i] - 64)).append(SPACE);
 		}
-		System.out.println(sb);
+		System.out.print(sb);
 	}
 }

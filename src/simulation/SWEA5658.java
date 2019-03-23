@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-public class SEA5658 {
+public class SWEA5658 {
 	private static final String NUMBER = "#";
 	private static final String SPACE = " ";
 	private static final String NEW_LINE = "\n";
