@@ -9,7 +9,8 @@ import java.util.StringTokenizer;
  * 구슬로 맨위에 있는 벽돌만 깨뜨릴 수 있다.
  * 벽돌은 숫자 1~9로 표현, 구슬이 명중한 벽돌은 상하좌우 (숫자-1)칸 만큼 같이 제거
  * 연쇄작용 있음
- * 구슬 :1<=N<=4, col:2<=W<=12, row:2<=H<=15일때 남은 벽돌의 갯수 출력 
+ * 구슬 :1<=N<=4, col:2<=W<=12, row:2<=H<=15일때 남은 벽돌의 갯수 출력
+ * 내리기를 어떻게...? 
  */
 public class SWEA5656 {
 	private static final String NUMBER = "#";
