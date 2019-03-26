@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
  */
 public class BOJ14891 {
 	private static Gear[] g = new Gear[4];
-	private static boolean[] isRotate = {false, false, false}; // (1,2), (2,3), (3,4)
+	private static boolean[] isRotate; // (1,2), (2,3), (3,4)
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,15 +33,17 @@ public class BOJ14891 {
 			int idx = Integer.parseInt(st.nextToken()) - 1;
 			int d = Integer.parseInt(st.nextToken());
 			
+			isRotate = new boolean[3];
 			for (int i = 0; i < 3; i++) {
-				if (g[i].pole.get(2) == g[i + 1].pole.get(6)) {
+				if (g[i].pole.get(2) != g[i + 1].pole.get(6)) {
 					isRotate[i] = true;
 				}
 			}
+			
 			g[idx].rotate(d);
 			rotateTheOthers(idx, d);
 		}
-		
+
 		System.out.println(getScore());
 	}
 	
@@ -57,7 +59,7 @@ public class BOJ14891 {
 		int opp = (d == 1 ? -1 : 1);
 		
 		switch (idx) {
-		case 1:
+		case 0:
 			if (isRotate[0]) {
 				g[1].rotate(opp);
 				if (isRotate[1]) {
@@ -69,7 +71,7 @@ public class BOJ14891 {
 			}
 			break;
 			
-		case 2:
+		case 1:
 			if (isRotate[0]) {
 				g[0].rotate(opp);
 			}
@@ -81,7 +83,7 @@ public class BOJ14891 {
 			}
 			break;
 			
-		case 3:
+		case 2:
 			if (isRotate[2]) {
 				g[3].rotate(opp);
 			}
@@ -93,7 +95,7 @@ public class BOJ14891 {
 			}
 			break;
 			
-		case 4:
+		case 3:
 			if (isRotate[2]) {
 				g[2].rotate(opp);
 				if (isRotate[1]) {
