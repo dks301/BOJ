@@ -3,6 +3,7 @@ package myPackage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 /*
  * 톱니바퀴
@@ -16,9 +17,94 @@ import java.util.LinkedList;
  * K번(1<=K<=100) 회전시킨 이후에 네 톱니바퀴의 점수의 합을 출력
  */
 public class BOJ14891 {
+	private static Gear[] g = new Gear[4];
+	private static boolean[] isRotate = {false, false, false}; // (1,2), (2,3), (3,4)
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
+		for (int i = 0; i < 4; i++) {
+			g[i] = new Gear(br.readLine().toCharArray());
+		}
+		
+		int K = Integer.parseInt(br.readLine());
+		while (K-- > 0) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int idx = Integer.parseInt(st.nextToken()) - 1;
+			int d = Integer.parseInt(st.nextToken());
+			
+			for (int i = 0; i < 3; i++) {
+				if (g[i].pole.get(2) == g[i + 1].pole.get(6)) {
+					isRotate[i] = true;
+				}
+			}
+			g[idx].rotate(d);
+			rotateTheOthers(idx, d);
+		}
+		
+		System.out.println(getScore());
+	}
+	
+	public static int getScore() {
+		int total = 0;
+		for (int i = 0; i < 4; i++) {
+			total += (g[i].pole.getFirst() == 1 ? Math.pow(2, i) : 0);
+		}
+		return total;
+	}
+	
+	public static void rotateTheOthers(int idx, int d) {
+		int opp = (d == 1 ? -1 : 1);
+		
+		switch (idx) {
+		case 1:
+			if (isRotate[0]) {
+				g[1].rotate(opp);
+				if (isRotate[1]) {
+					g[2].rotate(d);
+					if (isRotate[2]) {
+						g[3].rotate(opp);
+					}
+				}
+			}
+			break;
+			
+		case 2:
+			if (isRotate[0]) {
+				g[0].rotate(opp);
+			}
+			if (isRotate[1]) {
+				g[2].rotate(opp);
+				if (isRotate[2]) {
+					g[3].rotate(d);
+				}
+			}
+			break;
+			
+		case 3:
+			if (isRotate[2]) {
+				g[3].rotate(opp);
+			}
+			if (isRotate[1]) {
+				g[1].rotate(opp);
+				if (isRotate[0]) {
+					g[0].rotate(d);
+				}
+			}
+			break;
+			
+		case 4:
+			if (isRotate[2]) {
+				g[2].rotate(opp);
+				if (isRotate[1]) {
+					g[1].rotate(d);
+					if (isRotate[0]) {
+						g[0].rotate(opp);
+					}
+				}
+			}
+			break;
+		}
 	}
 	
 	public static class Gear {
@@ -30,12 +116,12 @@ public class BOJ14891 {
 			}
 		}
 		
-		public void rightTurn() {
-			
-		}
-		
-		public void leftTurn() {
-			
+		public void rotate(int d) {
+			if (d == 1) { // 시계 방향
+				pole.addFirst(pole.removeLast());
+			} else { // d == -1: 반시계 방향
+				pole.addLast(pole.removeFirst());
+			}
 		}
 	}
 }
