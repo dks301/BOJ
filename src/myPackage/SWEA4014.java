@@ -32,7 +32,7 @@ public class SWEA4014 {
 			N = Integer.parseInt(st.nextToken());
 			X = Integer.parseInt(st.nextToken());
 			
-			map = new int[N][N];
+			map = new int[N + 1][N + 1];
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < N; j++) {
@@ -40,23 +40,42 @@ public class SWEA4014 {
 				}
 			}
 			
+//			for (int i = 0; i < N; i++) {
+//				System.out.println(right(i));
+//			}
+//			System.out.println();
+//			for (int i = 0; i < N; i++) {
+//				System.out.println(down(i));
+//			}
+//			System.out.println();
+			
+			int cnt = 0;
 			for (int i = 0; i < N; i++) {
-				System.out.println(right(i));
+				cnt = right(i) ? cnt + 1 : cnt;
+				cnt = down(i) ? cnt + 1 : cnt;
 			}
-			sb.append(NEW_LINE);
+			
+			sb.append(cnt).append(NEW_LINE);
 		}
+		System.out.print(sb);
 	}
 	
 	public static boolean right(int i) {
 		int cnt = 0;
+		boolean[] isIncline = new boolean[N + 1];
 
 		for (int j = 0; j < N - 1; j++) {
 			if (map[i][j] == map[i][j + 1]) {
 				cnt++;
 			} else if ((map[i][j] - map[i][j + 1]) == -1) {
-				if (j - X <= 0 || cnt < X) {
+				if (j + 1 < X || cnt + 1 < X) {
 					return false;
 				} else {
+					for (int k = j; k > j - X; k--) {
+						if (isIncline[k] == true) {
+							return false;
+						}
+					}
 					cnt = 0;
 				}
 			} else if ((map[i][j] - map[i][j + 1]) == 1) {
@@ -67,6 +86,7 @@ public class SWEA4014 {
 					if (map[i][j + 1] != map[i][j + 2]) {
 						return false;
 					} else {
+						isIncline[j + 1] = true;
 						cnt++;
 						j++;
 					}
@@ -78,7 +98,42 @@ public class SWEA4014 {
 		return true;
 	}
 	
-	public static void bottom() {
+	public static boolean down(int j) {
+		int cnt = 0;
+		boolean[] isIncline = new boolean[N + 1];
 		
+		for (int i = 0; i < N - 1; i++) {
+			if (map[i][j] == map[i + 1][j]) {
+				cnt++;
+				
+			} else if ((map[i][j] - map[i + 1][j]) == -1) {
+				if (i + 1 < X || cnt + 1 < X) {
+					return false;
+				} else {
+					for (int k = i; k > i - X; k--) {
+						if (isIncline[k] == true) {
+							return false;
+						}
+					}
+					cnt = 0;
+				}
+			} else if ((map[i][j] - map[i + 1][j]) == 1) {
+				if (i + X >= N) {
+					return false;
+				}
+				for (int k = 0; k < X - 1; k++) {
+					if (map[i + 1][j] != map[i + 2][j]) {
+						return false;
+					} else {
+						isIncline[i + 1] = true;
+						cnt++;
+						i++;
+					}
+				}
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 }
