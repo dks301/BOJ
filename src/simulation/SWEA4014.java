@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,22 +32,13 @@ public class SWEA4014 {
 			N = Integer.parseInt(st.nextToken());
 			X = Integer.parseInt(st.nextToken());
 			
-			map = new int[N + 1][N + 1];
+			map = new int[N][N];
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < N; j++) {
 					map[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
-			
-//			for (int i = 0; i < N; i++) {
-//				System.out.println(right(i));
-//			}
-//			System.out.println();
-//			for (int i = 0; i < N; i++) {
-//				System.out.println(down(i));
-//			}
-//			System.out.println();
 			
 			int cnt = 0;
 			for (int i = 0; i < N; i++) {
@@ -62,7 +53,7 @@ public class SWEA4014 {
 	
 	public static boolean right(int i) {
 		int cnt = 0;
-		boolean[] isIncline = new boolean[N + 1];
+		boolean[] isIncline = new boolean[N];
 
 		for (int j = 0; j < N - 1; j++) {
 			if (map[i][j] == map[i][j + 1]) {
@@ -87,6 +78,7 @@ public class SWEA4014 {
 						return false;
 					} else {
 						isIncline[j + 1] = true;
+						isIncline[j + 2] = true;
 						cnt++;
 						j++;
 					}
@@ -100,7 +92,7 @@ public class SWEA4014 {
 	
 	public static boolean down(int j) {
 		int cnt = 0;
-		boolean[] isIncline = new boolean[N + 1];
+		boolean[] isIncline = new boolean[N];
 		
 		for (int i = 0; i < N - 1; i++) {
 			if (map[i][j] == map[i + 1][j]) {
@@ -126,6 +118,7 @@ public class SWEA4014 {
 						return false;
 					} else {
 						isIncline[i + 1] = true;
+						isIncline[i + 2] = true;
 						cnt++;
 						i++;
 					}
