@@ -19,7 +19,6 @@ public class SWEA5656 {
 	
 	private static int[][] map;
 	private static int W, H;
-	private static final int[][] DIRECTIONS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // 남 북 동 서
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -41,21 +40,141 @@ public class SWEA5656 {
 					map[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
+			int[][] tempMap = deepCopy(map, H, W);
+			explosion(tempMap, shoot(tempMap, 0), 0);
+			dropBlock(tempMap);
+			for (int a = 0; a < H; a++) {
+				for (int b = 0; b < W; b++) {
+					System.out.print(tempMap[a][b] + " ");
+				}
+				System.out.println();
+			}
+			System.out.println();
+			explosion(tempMap, shoot(tempMap, 3), 3);
+			dropBlock(tempMap);
+			for (int a = 0; a < H; a++) {
+				for (int b = 0; b < W; b++) {
+					System.out.print(tempMap[a][b] + " ");
+				}
+				System.out.println();
+			}
+			System.out.println();
+			explosion(tempMap, shoot(tempMap, 4), 4);
+			dropBlock(tempMap);
+			for (int a = 0; a < H; a++) {
+				for (int b = 0; b < W; b++) {
+					System.out.print(tempMap[a][b] + " ");
+				}
+				System.out.println();
+			}
+			System.out.println();
+			System.exit(0);
+//			int cnt = countBlock(tempMap);
+//			if (cnt < min) {
+//				min = cnt;
+//			}
 			
+			//sb.append(bruteForce(N)).append(NEW_LINE);
+		}
+		
+		System.out.print(sb);
+	}
+	
+	public static int bruteForce(int n) {
+		int min = Integer.MAX_VALUE;
+		
+		switch (n) {
+		case 1:
+			for (int i = 0; i < W; i++) {
+				int[][] tempMap = deepCopy(map, H, W);
+				explosion(tempMap, shoot(tempMap, i), i);
+				int cnt = countBlock(tempMap);
+				if (cnt < min) {
+					min = cnt;
+				}
+			}
+			break;
+			
+		case 2:
+			for (int i = 0; i < W; i++) {
+				for (int j = 0; j < W; j++) {
+					int[][] tempMap = deepCopy(map, H, W);
+					explosion(tempMap, shoot(tempMap, i), i);
+					dropBlock(tempMap);
+					
+					explosion(tempMap, shoot(tempMap, j), j);
+					dropBlock(tempMap);
+					int cnt = countBlock(tempMap);
+					if (cnt < min) {
+						min = cnt;
+					}
+				}
+			}
+			break;
+			
+		case 3:
+			for (int i = 0; i < W; i++) {
+				for (int j = 0; j < W; j++) {
+					for (int k = 0; k < W; k++) {
+						int[][] tempMap = deepCopy(map, H, W);
+						explosion(tempMap, shoot(tempMap, i), i);
+						dropBlock(tempMap);
+						
+						explosion(tempMap, shoot(tempMap, j), j);
+						dropBlock(tempMap);
+						
+						explosion(tempMap, shoot(tempMap, k), k);
+						dropBlock(tempMap);
+						
+						int cnt = countBlock(tempMap);
+						if (cnt < min) {
+							min = cnt;
+						}
+					}
+				}
+			}
+			break;
+			
+		case 4:
 			for (int i = 0; i < W; i++) {
 				for (int j = 0; j < W; j++) {
 					for (int k = 0; k < W; k++) {
 						for (int l = 0; l < W; l++) {
 							int[][] tempMap = deepCopy(map, H, W);
+							explosion(tempMap, shoot(tempMap, i), i);
+							dropBlock(tempMap);
 							
+							explosion(tempMap, shoot(tempMap, j), j);
+							dropBlock(tempMap);
+							
+							explosion(tempMap, shoot(tempMap, k), k);
+							dropBlock(tempMap);
+							
+							explosion(tempMap, shoot(tempMap, l), l);
+							dropBlock(tempMap);
+							int cnt = countBlock(tempMap);
+							if (cnt < min) {
+								min = cnt;
+							}
 						}
 					}
 				}
 			}
-			sb.append(NEW_LINE);
+			break;
 		}
-		
-		System.out.print(sb);
+		return min;
+	}
+	
+	public static int countBlock(int[][] map) {
+		int cnt = 0;
+		for (int i = 0; i < H; i++) {
+			for (int j = 0; j < W; j++) {
+				if (map[i][j] != 0) {
+					cnt++;
+				}
+			}
+		}
+		return cnt;
 	}
 	
 	public static int[][] deepCopy(int[][] origin, int H, int W) {
@@ -66,19 +185,46 @@ public class SWEA5656 {
 		return result;
 	}
 	
-	public static void dfs(int[][] map, int n, int d, int x, int y) {
-		if (n == 0) {
+	public static void dropBlock(int[][] map) {
+		for (int j = 0; j < W; j++) {
+			int top = 0;
+			for (int i = H - 1; i > 0; i--) {
+				if (map[i][j] != 0) {
+					int temp = map[i][j];
+					map[i][j] = 0;
+					map[H - (++top)][j] = temp;
+				}
+			}
+			
+		}
+	}
+	
+	public static int shoot(int[][] map, int y) {
+		for (int i = 0; i < H; i++) {
+			if (map[i][y] != 0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static void explosion(int[][] map, int x, int y) {
+		if (x < 0 || x > H - 1 || y < 0 || y > W - 1) {
 			return;
 		}
-		map[x][y]--;
-		
-		int nextRow = x + DIRECTIONS[d][0];
-		int nextCol = y + DIRECTIONS[d][1];
-		
-		if (nextRow < 0 || nextRow > H || nextCol < 0 || nextCol > W) {
+		if (map[x][y] == 0) {
 			return;
 		}
 		
-		dfs(map, --n, d, nextRow, nextCol);
+		int info = map[x][y];
+		map[x][y] = 0;
+		
+		for (int t = 1; t < info; t++) {
+			explosion(map, x + t, y);
+			explosion(map, x - t, y);
+			explosion(map, x, y + t);
+			explosion(map, x, y - t);
+		}
+		
 	}
 }
