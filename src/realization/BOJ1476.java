@@ -1,4 +1,4 @@
-package myPackage;
+package realization;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,19 +17,13 @@ public class BOJ1476 {
 		int E = Integer.parseInt(st.nextToken());
 		int S = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		
-		int e = 1;
-		int s = 1;
-		int m = 1;
+
 		int year = 1;
 		
-		while (true) {
-			if (e == E && s == S && m == M) {
-				break;
-			}
-			e = e == 15 ? 1 : e + 1;
-			s = s == 28 ? 1 : s + 1;
-			m = m == 19 ? 1 : m + 1;
+		while (!(E == 1 && S == 1 && M == 1)) {
+			E = E == 1 ? 15 : E - 1;
+			S = S == 1 ? 28 : S - 1;
+			M = M == 1 ? 19 : M - 1;
 
 			year++;
 		}
