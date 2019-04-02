@@ -1,4 +1,4 @@
-package myPackage;
+package bfs_dfs;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -39,7 +39,18 @@ public class BOJ2644 {
 		}
 		
 		check = new int[n + 1];
-		System.out.println(bfs(a, b));
+//		System.out.println(bfs(a, b));
+		dfs(a);
+		System.out.println(check[b] != 0 ? check[b] : -1);
+	}
+	
+	public static void dfs(int a) {
+		for (int next : al[a]) {
+			if (check[next] == 0) {
+				check[next] = check[a] + 1;
+				dfs(next);
+			}
+		}
 	}
 	
 	public static int bfs(int a, int b) {
@@ -55,7 +66,7 @@ public class BOJ2644 {
 					q.add(next);
 					check[next] = check[a] + 1;
 					if (next == b) {
-						return check[next];
+						return check[next] - 1;
 					}
 				}
 			}
