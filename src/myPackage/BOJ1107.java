@@ -1,4 +1,10 @@
 package myPackage;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 /*
  * 리모컨
  * 버튼: 0~9, +, -
@@ -9,6 +15,43 @@ package myPackage;
  */
 public class BOJ1107 {
 	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		int M = Integer.parseInt(br.readLine());
+		boolean[] numButton = {true, true, true, true, true, true, true, true, true, true};
+		if (M != 0) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			while (st.hasMoreTokens()) {
+				numButton[Integer.parseInt(st.nextToken())] = false;
+			}
+		}
 		
+		int ans = Math.abs(N - 100);
+		int div = (int)Math.pow(10, findDigit(N) - 1);
+		System.out.println(div);
+		
+	}
+	
+	public static void closest(int N, int div) {
+		if (N / div == 0) {
+			
+		} else {
+			
+		}
+		
+		
+	}
+	
+	public static int findDigit(int N) {
+		if (N == 0) {
+			return 1;
+		}
+		
+		int cnt = 0;
+		while (N != 0) {
+			N /= 10;
+			cnt++;
+		}
+		return cnt;
 	}
 }
