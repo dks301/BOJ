@@ -14,11 +14,15 @@ import java.util.StringTokenizer;
  * 채널 N으로 이동하기 위해 버튼을 최소 몇 번 눌러야하는지 출력 
  */
 public class BOJ1107 {
+	private static boolean[] numButton = 
+		{true, true, true, true, true, true, true, true, true, true};
+	
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		int M = Integer.parseInt(br.readLine());
-		boolean[] numButton = {true, true, true, true, true, true, true, true, true, true};
+		
 		if (M != 0) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			while (st.hasMoreTokens()) {
@@ -28,18 +32,17 @@ public class BOJ1107 {
 		
 		int ans = Math.abs(N - 100);
 		int div = (int)Math.pow(10, findDigit(N) - 1);
-		System.out.println(div);
+		
 		
 	}
 	
 	public static void closest(int N, int div) {
-		if (N / div == 0) {
+		int val = N / div;
+		if (N / div != 0) {
 			
 		} else {
 			
 		}
-		
-		
 	}
 	
 	public static int findDigit(int N) {
