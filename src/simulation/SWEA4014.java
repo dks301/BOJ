@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
  * 가로 또는 세로 방향으로 건설할 수 있는 가능성 확인
  * 경사로는 길이가 X, 높이 1
  * 경사로의 길이X와 절벽지대의 정보가 주어질 때, 활주로를 건설할 수 있는 경우의 수 출력.
- * 
  */
 public class SWEA4014 {
 	private static final String SPACE = " ";
