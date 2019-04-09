@@ -3,7 +3,14 @@ package myPackage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
+/*
+ * 경사로
+ * 크기 NxN, 경사로는 높이가 항상 1, 길이는 L
+ * 지도가 주어졌을 때, 지나갈 수 있는 길의 개수를 출력
+ * 
+ * 첫째줄: N(2<=N<=100), L(1<=L<=N)
+ * 둘째줄~N개줄: 지도, 각 칸의 높이는 10보다 작거나 같은 자연수
+ */
 public class BOJ14890 {
 	private static int[][] map;
 	private static int N;
