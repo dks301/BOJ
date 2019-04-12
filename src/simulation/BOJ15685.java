@@ -1,7 +1,9 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 /*
@@ -41,16 +43,11 @@ public class BOJ15685 {
 			int d = Integer.parseInt(st.nextToken());
 			int g = Integer.parseInt(st.nextToken());
 
-			DragonCurve dc = new DragonCurve(x, y, d, g);
-			System.out.println();
-			for (int i = 0; i <= 100; i++) {
-				for (int j = 0; j <= 100; j++) {
-					System.out.print(map[i][j] + " ");
-				}
-				System.out.println();
+			DragonCurve dc = new DragonCurve(x, y, d);
+			for (int i = 0; i < g; i++) {
+				dc.nextGeneration();
 			}
-			System.out.println();
-			System.out.println();
+			dc.setMap();
 		}
 		
 		System.out.println(getAnswer());
@@ -68,61 +65,58 @@ public class BOJ15685 {
 
 		return ans;
 	}
-
+	
+	public static class Node {
+		int x, y, d;
+		
+		public Node(int x, int y, int d) {
+			this.x = x;
+			this.y = y;
+			this.d = d;
+		}
+	}
 	public static class DragonCurve {
-		boolean[][] pos;
-		int startRow, startCol;
-		int endRow, endCol;
-
-		public DragonCurve(int col, int row, int d, int g) {
-			pos = new boolean[101][101];
-			pos[row][col] = true;
-			startRow = row;
-			startCol = col;
-			endRow = row + DIRECTIONS[d][ROW];
-			endCol = col + DIRECTIONS[d][COL];
-			pos[endRow][endCol] = true;
-
-			for (int i = 0; i < g; i++) {
-				nextGeneration();
+		Stack<Node> cur = new Stack<>();
+		Stack<Node> next = new Stack<>();
+		int endRow, endCol, endD;
+		
+		public DragonCurve(int col, int row, int d) {
+			map[row][col] = true;
+			endRow = row;
+			endCol = col;
+			endD = d;
+			cur.push(new Node(row, col, d));
+			next.push(new Node(row, col, d));
+		}
+		
+		public void nextGeneration() {
+			while(!cur.isEmpty()) {
+				Node n = cur.pop();
+				int nextRow = endRow + DIRECTIONS[endD][ROW];
+				int nextCol = endCol + DIRECTIONS[endD][COL];
+				next.push(new Node(nextRow, nextCol, (n.d + 1) % 4));
+				
+				endRow = nextRow;
+				endCol = nextCol;
+				endD = (n.d + 1) % 4;
 			}
 			
-			setMap();
-		}
-
-		public void nextGeneration() {
-			int baseRow = endRow, baseCol = endCol;
-			int newEndRow = -1, newEndCol = -1;
-
-			for (int i = 0; i <= 100; i++) {
-				for (int j = 0; j <= 100; j++) {
-					if (pos[i][j]) {
-						int nextRow = baseRow + baseCol - i;
-						int nextCol = baseRow + baseCol - j;
-						if (nextRow < 0 || nextRow > 100 || nextCol < 0 || nextCol > 100) {
-							continue;
-						}
-
-						pos[nextRow][nextCol] = true;
-						if (i == startRow && j == startCol) {
-							newEndRow = nextRow;
-							newEndCol = nextCol;
-						}
-					}
-				}
-			}
-			endRow = newEndRow;
-			endCol = newEndCol;
+			cur = (Stack<Node>)next.clone();
 		}
 
 		public void setMap() {
-			for (int i = 0; i <= 100; i++) {
-				for (int j = 0; j <= 100; j++) {
-					if (pos[i][j]) {
-						map[i][j] = true;
-					}
+			Iterator<Node> it = cur.iterator();
+			while (it.hasNext()) {
+				Node n = it.next();
+				int nextRow = n.x + DIRECTIONS[n.d][ROW];
+				int nextCol = n.y + DIRECTIONS[n.d][COL];
+				if (nextRow < 0 || nextRow > 100 || nextCol < 0 || nextCol > 100) {
+					continue;
 				}
+				
+				map[nextRow][nextCol] = true;
 			}
+			
 		}
 	}
 }
