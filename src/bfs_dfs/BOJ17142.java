@@ -9,7 +9,8 @@ import java.util.StringTokenizer;
 
 /*
  * 연구소 3
- * 
+ * 연구소 2와 같음
+ * 다른 점은 2가 비활성 바이러스가 있다는것
  */
 public class BOJ17142 {
 	private static int N, M, ans;
