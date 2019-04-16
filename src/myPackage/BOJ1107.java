@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
  * 현재 채널은 100번
  * N(0<=N<=500,000), 고장난 버튼의 수M(0<=M<=10)
  * 채널 N으로 이동하기 위해 버튼을 최소 몇 번 눌러야하는지 출력 
+ * dp?
  */
 public class BOJ1107 {
 	private static boolean[] numButton = 
