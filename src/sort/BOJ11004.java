@@ -2,10 +2,8 @@ package sort;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 /*
  * K번째 수
  * 수열 An이 주어질 때, 오름차순 정렬 후 k번째에 있는 수 출력 
