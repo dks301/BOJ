@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
  * 점 모으기
  * NxN인 격자공간에 M개의 점
  * 격자공간에 있는 모든 점들을 하나의 사각형으로 모을 때 드는 이동거리의 합의 최솟값 출력
- * 1<=N<=10,000 , 1<=M<=100,000
+ * 1<=N<=10,000 , 1<=M<=100,000 
  */
 public class BOJ7571 {
 	public static void main(String[] args) throws Exception {
