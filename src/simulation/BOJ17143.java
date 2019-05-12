@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,9 +28,8 @@ public class BOJ17143 {
 	private static int R, C, M;
 	private static int manIdx = -1;
 	private static int total = 0;
-	private static boolean[][] map;
+	private static int[][] map;
 	private static LinkedList<Shark> ll;
-	private static LinkedList<Shark> ll2;
 	
 	private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 	private static final int ROW = 0;
@@ -43,30 +42,50 @@ public class BOJ17143 {
 		C = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		map = new boolean[R + 1][C + 1];
+		map = new int[R][C];
 		ll = new LinkedList<>();
-		ll2 = new LinkedList<>();
 		
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int r = Integer.parseInt(st.nextToken());
 			int c = Integer.parseInt(st.nextToken());
-			map[r][c] = true;
-			ll.add(new Shark(r, c, Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
+			int s = Integer.parseInt(st.nextToken());
+			int d = Integer.parseInt(st.nextToken());
+			int z = Integer.parseInt(st.nextToken());
+			map[r - 1][c - 1] = z;
+			ll.add(new Shark(r, c, s, d, z));
 		}
 		
-		for (int i = 0; i < C + 1; i++) {
+		for (int i = 0; i < C; i++) {
+//			for (int j = 0; j < R; j++) {
+//				for (int k = 0; k < C; k++) {
+//					System.out.print(map[j][k] + " ");
+//				}
+//				System.out.println();
+//			}
+//			System.out.println(total);
+			
 			fishing();
-			map = new boolean[R + 1][C + 1];
+			map = new int[R + 1][C + 1];
 			Iterator<Shark> it = ll.iterator();
 			while (it.hasNext()) {
 				Shark s = it.next();
 				s.move();
-				if (map[s.r][s.c]) {
-					
+				if (map[s.r][s.c] == 0) {
+					map[s.r][s.c] = s.z;
+				} else {
+					if (map[s.r][s.c] < s.z) {
+						map[s.r][s.c] = s.z;
+					}
 				}
-				map[s.r][s.c] = true;
-				
+			}
+
+			it = ll.iterator();
+			while (it.hasNext()) {
+				Shark s = it.next();
+				if (map[s.r][s.c] > s.z) {
+					it.remove();
+				}
 			}
 		}
 		
@@ -76,12 +95,12 @@ public class BOJ17143 {
 	public static void fishing() {
 		manIdx++;
 		for (int i = 0; i < R; i++) {
-			if (map[i][manIdx]) {
+			if (map[i][manIdx] != 0) {
 				Iterator<Shark> it = ll.iterator();
 				while (it.hasNext()) {
 					Shark s = it.next();
 					if (s.r == i && s.c == manIdx) {
-						ll.remove(s);
+						it.remove();
 						total += s.z;
 						break;
 					}
@@ -93,13 +112,12 @@ public class BOJ17143 {
 	
 	public static class Shark {
 		int r, c, s, d, z;
-		boolean isDie = false;
 		// 위치(r,c), 속력(s), 이동방향(d), 크기(z)
 		// 1<=r<=R, 1<=c<=C, 0<=s<=1,000, 1<=d<=4, 1<=z<=10,000
 		
 		public Shark(int r, int c, int s, int d, int z) {
-			this.r = r;
-			this.c = c;
+			this.r = r - 1;
+			this.c = c - 1;
 			this.s = s;
 			this.d = d;
 			this.z = z;
