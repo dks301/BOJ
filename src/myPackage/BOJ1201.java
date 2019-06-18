@@ -2,7 +2,6 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -37,10 +36,14 @@ public class BOJ1201 {
 				group[i] = new LinkedList<Integer>();
 			}
 			
-			int jump = N / M;
-			int groupIdx = 1;
-			int lastVal = 0;
-			for (int i = 1; i <= N; i += jump) {
+			for (int i = 1; i <= K; i++) {
+				group[1].add(arr[i]);
+			}
+			
+			int jump = (M == 1) ? 1 : ((N - K) / (M - 1));
+			int groupIdx = 2;
+			int lastVal = K;
+			for (int i = K + 1; i <= N; i += jump) {
 				for (int j = i; j < i + jump; j++) {
 					group[groupIdx].add(arr[j]);
 					lastVal = j;
@@ -53,24 +56,23 @@ public class BOJ1201 {
 			}
 			
 			while (lastVal != N) {
-				if (group[groupIdx].size() < K) {
-					group[groupIdx].add(++lastVal);
+				if (group[M].size() >= K) {
+					groupIdx = M;
+					group[M].add(++lastVal);
+					
+					while (group[groupIdx].size() > K) {
+						group[groupIdx - 1].add(group[groupIdx].removeFirst());
+						groupIdx--;
+					}
+					continue;
 				} else {
-					group[groupIdx - 1].add(group[groupIdx].remove(0));
+					group[M].add(++lastVal);
 				}
-			}
-			
-			while (group[groupIdx].size() != K) {
-				group[groupIdx].addFirst(group[groupIdx - 1].remove(group[groupIdx - 1].size() - 1));
-			}
-			
-			for (int i = 1; i <= M; i++) {
-				Collections.reverse(group[i]);
 			}
 			
 			StringBuilder sb = new StringBuilder();
 			for (int i = 1; i <= M; i++) {
-				for (int j = 0; j < group[i].size(); j++) {
+				for (int j = group[i].size() - 1; j >= 0; j--) {
 					sb.append(group[i].get(j)).append(SPACE);	
 				}
 			}
