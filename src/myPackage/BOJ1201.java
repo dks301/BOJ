@@ -2,8 +2,8 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 /*
@@ -32,36 +32,36 @@ public class BOJ1201 {
 			for (int i = 1; i <= N; i++) {
 				arr[i] = i;
 			}
-			ArrayList<Integer>[] group = new ArrayList[M + 1];
+			LinkedList<Integer>[] group = new LinkedList[M + 1];
 			for (int i = 1; i <= M; i++) {
-				group[i] = new ArrayList<Integer>();
+				group[i] = new LinkedList<Integer>();
 			}
 			
-			for (int i = 1; i <= K; i++) {
-				group[1].add(arr[i]);
-			}
-			
-			int jump = (M == 1) ? 1 : ((N - K) / (M - 1));
-			int groupIdx = 2;
-			int lastVal = K;
-			for (int i = K + 1; i <= N; i += jump) {
+			int jump = N / M;
+			int groupIdx = 1;
+			int lastVal = 0;
+			for (int i = 1; i <= N; i += jump) {
 				for (int j = i; j < i + jump; j++) {
 					group[groupIdx].add(arr[j]);
 					lastVal = j;
 				}
 				groupIdx++;
 				if (groupIdx > M) {
+					groupIdx--;
 					break;
 				}
 			}
 			
-			groupIdx--;
 			while (lastVal != N) {
-				if (group[groupIdx].size() > K) {
-					groupIdx--;
-					continue;
+				if (group[groupIdx].size() < K) {
+					group[groupIdx].add(++lastVal);
+				} else {
+					group[groupIdx - 1].add(group[groupIdx].remove(0));
 				}
-				group[groupIdx].add(++lastVal);
+			}
+			
+			while (group[groupIdx].size() != K) {
+				group[groupIdx].addFirst(group[groupIdx - 1].remove(group[groupIdx - 1].size() - 1));
 			}
 			
 			for (int i = 1; i <= M; i++) {
