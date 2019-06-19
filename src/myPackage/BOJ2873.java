@@ -17,6 +17,8 @@ import java.util.StringTokenizer;
  * 
  * 출력
  * 가장 큰 기쁨을 주는 롤러 코스터는 어떻게 이동하는지 U,R,L,D로 출력
+ * 
+ * r,c가 짝수 일 떄 해결해야 함
  */
 public class BOJ2873 {
 	private static final String UP = "U";
