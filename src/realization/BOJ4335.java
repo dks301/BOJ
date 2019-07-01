@@ -29,9 +29,8 @@ public class BOJ4335 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int Ollie;
 		char Stan;
+		ArrayList<Round> al = new ArrayList<>();
 		
-		ArrayList<Integer> al = new ArrayList<>();
-		ArrayList<Character> al2 = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		while (true) {
 			Ollie = Integer.parseInt(br.readLine());
@@ -40,13 +39,14 @@ public class BOJ4335 {
 			}
 
 			Stan = br.readLine().charAt(4);
+			
 			if (Stan == 't') {
 				boolean isHonest = true;
 				for (int i = 0; i < al.size(); i++) {
-					if (Ollie < al.get(i)) {
-						isHonest = al2.get(i) == 'h' ? true : false;
-					} else if (Ollie > al.get(i)) {
-						isHonest = al2.get(i) == 'l' ? true : false;
+					if (Ollie < al.get(i).Ollie) {
+						isHonest = al.get(i).Stan == 'h' ? true : false;
+					} else if (Ollie > al.get(i).Ollie) {
+						isHonest = al.get(i).Stan == 'l' ? true : false;
 					} else {
 						isHonest = false;
 					}
@@ -57,13 +57,21 @@ public class BOJ4335 {
 				}
 				sb.append(isHonest ? HONEST : DISHONEST).append(NEW_LINE);
 				al.clear();
-				al2.clear();
 			} else {
-				al.add(Ollie);
-				al2.add(Stan);
+				al.add(new Round(Ollie, Stan));
 			}
 		}
 		
 		System.out.print(sb);
+	}
+	
+	public static class Round {
+		int Ollie;
+		char Stan;
+		
+		public Round(int o, char s) {
+			this.Ollie = o;
+			this.Stan = s;
+		}
 	}
 }
