@@ -42,11 +42,12 @@ public class BOJ4335 {
 			
 			if (Stan == 't') {
 				boolean isHonest = true;
-				for (int i = 0; i < al.size(); i++) {
-					if (Ollie < al.get(i).Ollie) {
-						isHonest = al.get(i).Stan == 'h' ? true : false;
-					} else if (Ollie > al.get(i).Ollie) {
-						isHonest = al.get(i).Stan == 'l' ? true : false;
+				
+				for (Round r : al) {
+					if (Ollie < r.Ollie) {
+						isHonest = r.Stan == 'h' ? true : false;
+					} else if (Ollie > r.Ollie) {
+						isHonest = r.Stan == 'l' ? true : false;
 					} else {
 						isHonest = false;
 					}
