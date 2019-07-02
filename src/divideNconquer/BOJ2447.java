@@ -2,7 +2,6 @@ package divideNconquer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 /*
  * 별 찍기-10
@@ -15,29 +14,30 @@ import java.util.Arrays;
  * 별 출력
  */
 public class BOJ2447 {
-	private static char[][] result;
-	private static final char STAR = '*';
-	private static final char SPACE = ' ';
+	private static boolean[][] result;
+	private static final char STAR = '*'; // false
+	private static final char SPACE = ' '; // true
 	private static final char NEW_LINE = '\n';
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		result = new char[N][N];
-		for (int i = 0; i < N; i++) {
-			Arrays.fill(result[i], STAR);
-		}
+		result = new boolean[N][N];
 		
 		solve(0, 0, N);
 		
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
-				sb.append(result[i][j]);
+				if (result[i][j]) {
+					sb.append(SPACE);
+				} else {
+					sb.append(STAR);
+				}
 			}
 			sb.append(NEW_LINE);
 		}
-		System.out.print(sb);
+		System.out.print(sb.toString());
 	}
 	
 	public static void solve(int x, int y, int n) {
@@ -48,7 +48,7 @@ public class BOJ2447 {
 		
 		for (int i = x + val; i < x + (2 * val); i++) {
 			for (int j = y + val; j < y + (2 * val); j++) {
-				result[i][j] = SPACE;
+				result[i][j] = true;
 			}
 		}
 		for (int i = x; i < x + n; i += val) {
