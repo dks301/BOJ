@@ -27,13 +27,17 @@ public class BOJ1654 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		K = Integer.parseInt(st.nextToken());
 		N = Integer.parseInt(st.nextToken());
-
+		
+		int max = 0;
 		line = new int[K];
 		for (int i = 0; i < K; i++) {
 			line[i] = Integer.parseInt(br.readLine());
+			if (max < line[i]) {
+				max = line[i];
+			}
 		}
 
-		long left = 0, right = Integer.MAX_VALUE;
+		long left = 1, right = max;
 		long mid;
 
 		while (left <= right) {
