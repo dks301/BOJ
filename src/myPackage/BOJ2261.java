@@ -35,6 +35,7 @@ public class BOJ2261 {
 		}
 		
 		int x = p.first().x;
+		
 		Iterator<Node> it = p.iterator();
 		while (it.hasNext()) {
 			Node next = it.next();
@@ -58,6 +59,7 @@ public class BOJ2261 {
 			if (dis < ans) {
 				ans = dis;
 			}
+			System.out.println(next.x + " " + next.y);
 		}
 		
 		
