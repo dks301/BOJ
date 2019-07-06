@@ -1,4 +1,10 @@
 package myPackage;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 /*
  * 바둑이 포커
  * 앞면에는 1-15의 자연수, 뒷면은 검은색또는 흰색인 30장짜리 트럼프 카드
@@ -22,5 +28,26 @@ package myPackage;
  * 모든 카드쌍의 경우의 수를 서열순으로 출력
  */
 public class BOJ17292 {
-
+	private static ArrayList<Card> al;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), ",");
+		al = new ArrayList<>();
+		for (int i = 0; i < 6; i++) {
+			al.add(new Card(st.nextToken()));
+		}
+		
+		
+	}
+	
+	public static class Card {
+		int num;
+		boolean color;
+		
+		public Card(String in) {
+			char[] temp = in.toCharArray();
+			this.num = Integer.parseInt(temp[0] + "", 16);
+			this.color = temp[1] == 'b' ? true : false;
+		}
+	}
 }
