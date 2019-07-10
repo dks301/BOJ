@@ -1,7 +1,4 @@
-/bfs_dfs/
-/bigInteger/
-/bruteForce/
-/deque/
+/divideNconquer/
 /dp/
 /eratosthenesSieve/
 /euclid/
@@ -18,6 +15,3 @@
 /stack/
 /string/
 /tree/
-/divideNconquer/
-/binarySearch/
-/bitmask/
