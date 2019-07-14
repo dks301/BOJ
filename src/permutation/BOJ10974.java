@@ -1,4 +1,4 @@
-package math;
+package permutation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
