@@ -102,13 +102,4 @@ public class BOJ2251 {
 		}
 		return val;
 	}
-
-	public static class Bucket {
-		int now, max;
-
-		public Bucket(int now, int max) {
-			this.now = now;
-			this.max = max;
-		}
-	}
 }
