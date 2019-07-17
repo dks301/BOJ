@@ -40,7 +40,10 @@ public class BOJ10819 {
 			if (val > max) {
 				max = val;
 			}
-		
+			for (int i = 0; i < 5; i++) {
+				System.out.print(A[i] + " ");
+			}
+			System.out.println();
 		} while(nextPermutation());
 		
 		System.out.println(max);
