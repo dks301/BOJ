@@ -1,4 +1,8 @@
 package myPackage;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /*
  * 문자열 폭발
  * 문자열이 폭발 문자열을 포함하고 있는 경우에, 모든 폭발 문자열이 폭발
@@ -15,5 +19,18 @@ package myPackage;
  * 폭발이 끝난 후 남는 문자열 출력 남아있는 문자가 없으면 "FRULA"출력
  */
 public class BOJ9935 {
-
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str = br.readLine();
+		String bomb = br.readLine();
+		
+		while (str.contains(bomb)) {
+			str = str.replaceAll(bomb, "");
+		}
+		if (str.isEmpty()) {
+			System.out.println("FRULA");
+		} else {
+			System.out.println(str);
+		}
+	}
 }
