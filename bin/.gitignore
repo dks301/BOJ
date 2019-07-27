@@ -1,3 +1,4 @@
+/backtracking/
 /bfs_dfs/
 /bigInteger/
 /binarySearch/
@@ -12,6 +13,7 @@
 /findRules/
 /floodFill/
 /greedy/
+/heap/
 /linkedList/
 /math/
 /myPackage/
@@ -23,6 +25,4 @@
 /stack/
 /string/
 /tree/
-/backtracking/
 /unionFind/
-/heap/
