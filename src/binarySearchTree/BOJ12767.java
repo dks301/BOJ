@@ -1,11 +1,8 @@
-package myPackage;
+package binarySearchTree;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 /*
@@ -61,7 +58,6 @@ public class BOJ12767 {
 	public static String preorder(Node n) {
 		String ans = "";
 		ans += "V";
-		System.out.print(n.val + " ");
 		if (n.left != null) {
 			ans += "L";
 			ans += preorder(n.left);
