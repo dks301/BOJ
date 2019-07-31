@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  * 스티커 2n개 중 여러개를 뗄 때, 스티커 점수의 최댓값을 출력  
  */
 public class BOJ9465 {
-	private static final String NEW_LINE = "\n";
+	private static final char NEW_LINE = '\n';
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,10 +31,6 @@ public class BOJ9465 {
 			}
 			
 			int[][] d = new int[n + 1][3];
-			d[0][0] = 0;
-			d[0][1] = 0;
-			d[0][2] = 0;
-			
 			for (int j = 1; j <= n; j++) {
 				d[j][0] = max(d[j - 1][0], d[j - 1][1], d[j - 1][2]);
 				d[j][1] = Math.max(d[j - 1][0], d[j - 1][2]) + s[0][j];
@@ -46,6 +42,6 @@ public class BOJ9465 {
 	}
 	
 	public static int max(int a, int b, int c) {
-		return a > b ? (a > c ? a : c) : (b > c ? b : c);
+		return Math.max(Math.max(a, b), c);
 	}
 }
