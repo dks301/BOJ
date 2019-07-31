@@ -24,21 +24,20 @@ public class BOJ1890 {
 		}
 
 		d = new long[N][N];
-		int jump = map[0][0];
-		d[0][jump] = d[jump][0] = 1;
+		d[0][0] = 1;
 		
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
-				for (int k = 1; k <= i; k++) {
-					if (map[i - k][j] == k && d[i - k][j] != 0) {
-						d[i][j] += d[i - k][j];
-					}
+				if (map[i][j] == 0) {
+					continue;
 				}
-
-				for (int k = 1; k <= j; k++) {
-					if (map[i][j - k] == k && d[i][j - k] != 0) {
-						d[i][j] += d[i][j - k];
-					}
+				
+				if (j + map[i][j] < N) {
+					d[i][j + map[i][j]] += d[i][j];
+				}
+				
+				if (i + map[i][j] < N) {
+					d[i + map[i][j]][j] += d[i][j];
 				}
 			}
 		}
