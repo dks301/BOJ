@@ -24,16 +24,16 @@ public class BOJ2228 {
 		
 	}
 	
-	public static int go(int i, int j, int k) {
-		if (j == M) {
-			return 0;
-		}
-		if (i == N) {
-			return 0;
-		}
-		
-		if (A[i] > 0) {
-			d[i][j] = d[i - 1][j];
-		}
-	}
+//	public static int go(int i, int j, int k) {
+//		if (j == M) {
+//			return 0;
+//		}
+//		if (i == N) {
+//			return 0;
+//		}
+//		
+//		if (A[i] > 0) {
+//			d[i][j] = d[i - 1][j];
+//		}
+//	}
 }
