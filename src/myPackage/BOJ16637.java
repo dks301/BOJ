@@ -21,7 +21,9 @@ public class BOJ16637 {
 				// i-2 자리까지 최댓값과 a[i]의 값을  a[i-1]연산자로 계산
 			}
 		}
-
+		for (int i = 0; i < N; i += 2) {
+			System.out.println(d[i][0] + " " + d[i][1]);
+		}
 		System.out.println(Math.max(d[N - 1][0], d[N - 1][1])); // 최댓값 출력
 	}
 
