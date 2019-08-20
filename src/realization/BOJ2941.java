@@ -12,7 +12,9 @@ public class BOJ2941 {
 		for (int i = 0; i < input.length; i++) {
 			if (i == 1 && (input[i] == '=' || input[i] == '-'))
 				count--;
-			else {
+			else if (i == 0 && input[i] == 'j') {
+				continue;
+			} else {
 				count = (input[i] == '=' || input[i] == '-') ? (input[i - 2] == 'd' && input[i - 1] == 'z' ? count - 2 : count - 1) : count;
 				count = input[i] == 'j' ? (input[i - 1] == 'l' || input[i - 1] == 'n' ? count - 1 : count) : count;
 			}
