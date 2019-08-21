@@ -1,4 +1,4 @@
-package myPackage;
+package permutation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class BOJ17281 {
-	private static int N, ans, nextPlayer;
+	private static int N, ans;
 	private static int[][] playerInfo;
-	private static ArrayList<Inning>[] al;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -37,22 +36,18 @@ public class BOJ17281 {
 
 	public static void permutation(int[] arr, int depth, int n, int k) {
 		if (depth == k) {
-			// 여기서 뭐 하면됨
 			if (arr[3] != 0) {
 				return;
 			} else {
 				int score = 0;
-				for (int i = 0; i < arr.length; i++) {
-					System.out.print(arr[i] + " ");
-				}
-				System.out.println();
+				int nextPlayer = 0;
 				
-				nextPlayer = 0;
 				for (int i = 0; i < N; i++) {
 					Inning in = new Inning();
 					nextPlayer = in.go(arr, i, nextPlayer);
 					score += in.score;
 				}
+				
 				if (score > ans) {
 					ans = score;
 				}
@@ -79,54 +74,37 @@ public class BOJ17281 {
 
 		public int go(int[] arr, int i, int idx) {
 			int nextPlayer = idx;
-			while (nextPlayer != -1) {
+			while (true) {
 				switch (playerInfo[i][arr[nextPlayer]]) {
 				case 0:
 					outCount++;
 					if (outCount == 3) {
 						nextPlayer++;
-						if (nextPlayer > 8) {
-							nextPlayer = 0;
-						}
-						return nextPlayer;
+						return nextPlayer != 9 ? nextPlayer : 0;
 					}
 					break;
 
 				case 1:
 					hit();
-					nextPlayer++;
-					if (nextPlayer > 8) {
-						nextPlayer = 0;
-					}
 					break;
 
 				case 2:
 					doubleHit();
-					nextPlayer++;
-					if (nextPlayer > 8) {
-						nextPlayer = 0;
-					}
 					break;
 
 				case 3:
 					tripleHit();
-					nextPlayer++;
-					if (nextPlayer > 8) {
-						nextPlayer = 0;
-					}
 					break;
 
 				case 4:
-					System.out.println("??asdfasdf");
 					homerun();
-					nextPlayer++;
-					if (nextPlayer > 8) {
-						nextPlayer = 0;
-					}
 					break;
 				}
+				nextPlayer++;
+				if (nextPlayer > 8) {
+					nextPlayer = 0;
+				}
 			}
-			return -1; // error
 		}
 
 		public void hit() {
