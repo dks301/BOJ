@@ -2,6 +2,7 @@ package myPackage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -41,7 +42,8 @@ public class BOJ3954 {
 			input = new int[si];
 			i_idx = 0;
 			
-			Stack<Integer> a = new Stack<>();
+			ArrayList<Pair> al = new ArrayList<>();
+			Stack<Pair> a = new Stack<>();
 			int cnt = 0;
 			boolean isTerminate = false;
 			for (int i = 0; i < sc; i++) {
@@ -50,7 +52,7 @@ public class BOJ3954 {
 				}
 				char c = code[i];
 				if (c == '[') {
-					a.push(i);
+					a.push(new Pair(i));
 				}
 				
 				int result = cmd(c);
@@ -150,9 +152,8 @@ public class BOJ3954 {
 	public static class Pair {
 		int a, b;
 		
-		public Pair(int a, int b) {
+		public Pair(int a) {
 			this.a = a;
-			this.b = b;
 		}
 	}
 }
