@@ -12,12 +12,10 @@ public class BOJ3954 {
 	private static int[] data;
 	private static int p;
 	private static char[] code;
-	private static int c_idx;
 	private static int[] input;
 	private static int i_idx;
 	
-	private static final int MAX = 255;
-	private static final int MIN = 0;
+	private static final int MOD = 256;
 	private static final String T = "Terminates";
 	private static final String L = "Loops ";
 	private static final char SPACE = ' ';
@@ -37,12 +35,14 @@ public class BOJ3954 {
 			p = 0;
 			
 			code = br.readLine().toCharArray();
-			c_idx = 0;
 			
+			char[] temp = br.readLine().toCharArray();
 			input = new int[si];
+			for (int i = 0; i < si; i++) {
+				input[i] = (int)temp[i];
+			}
 			i_idx = 0;
 			
-			ArrayList<Pair> al = new ArrayList<>();
 			Stack<Pair> a = new Stack<>();
 			int cnt = 0;
 			boolean isTerminate = false;
@@ -52,29 +52,41 @@ public class BOJ3954 {
 				}
 				char c = code[i];
 				if (c == '[') {
-					a.push(new Pair(i));
+					int j = i + 1;
+					int size = 1;
+					while (size != 0) {
+						if (code[j] == '[') {
+							size++;
+						}
+						if (code[j] == ']') {
+							size--;
+						}
+						j++;
+					}
+					a.push(new Pair(i, j - 1));
 				}
 				
 				int result = cmd(c);
+				//System.out.println(cnt + ": " + c + " " + result);
 				if (result < 0) {
 					isTerminate = true;
 					break;
 					
 				} else if (result == 1) {
-					int j = i;
-					while (code[j] == ']') {
-						
+					i = a.pop().end;
+					if (i == sc - 1) {
+						isTerminate = true;
+						break;
 					}
 				} else if (result == 2) {
-					int j = i - 1;
-					while (code[j] != '[') {
-						j--;
-					}
-					i = j + 1;
+					i = a.peek().start;
 					
 				} else if (result == 0) {
 					if (c == ']') {
 						a.pop();
+					}
+					if (i == sc - 1) {
+						isTerminate = true;
 					}
 				}
 			}
@@ -82,7 +94,11 @@ public class BOJ3954 {
 			if (isTerminate) {
 				sb.append(T).append(NEW_LINE);
 			} else {
-				sb.append(L).append('a').append(SPACE).append('b').append(NEW_LINE);
+				while (a.size() != 1) {
+					a.pop();
+				}
+				sb.append(L).append(a.peek().start).append(SPACE).append(a.peek().end).append(NEW_LINE);
+				
 			}
 		}
 		
@@ -93,17 +109,15 @@ public class BOJ3954 {
 		switch (ch) {
 		case '-':
 			data[p]--;
-			if (data[p] < MIN) {
-				// value underflow
-				return -1;
+			if (data[p] == -256) {
+				data[p] %= MOD;
 			}
 			break;
 			
 		case '+':
 			data[p]++;
-			if (data[p] > MAX) {
-				// value overflow
-				return -2;
+			if (data[p] == 256) {
+				data[p] %= MOD;
 			}
 			break;
 			
@@ -141,8 +155,6 @@ public class BOJ3954 {
 				data[p] = input[i_idx++];
 			} else if (i_idx == si) {
 				data[p] = 255;
-			} else { // 읽을 문자가 없을 때
-				return -3;
 			}
 			break;
 		}
@@ -150,10 +162,11 @@ public class BOJ3954 {
 	}
 	
 	public static class Pair {
-		int a, b;
+		int start, end;
 		
-		public Pair(int a) {
-			this.a = a;
+		public Pair(int start, int end) {
+			this.start = start;
+			this.end = end;
 		}
 	}
 }
