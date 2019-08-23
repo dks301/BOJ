@@ -100,6 +100,11 @@ public class BOJ3954 {
 				sb.append(L).append(a.peek().start).append(SPACE).append(a.peek().end).append(NEW_LINE);
 				
 			}
+			
+			data = null;
+			code = null;
+			input = null;
+			a = null;
 		}
 		
 		System.out.print(sb);
