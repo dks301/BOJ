@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,6 +20,7 @@ public class BOJ3954 {
 	private static final String L = "Loops ";
 	private static final char SPACE = ' ';
 	private static final char NEW_LINE = '\n';
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int t = Integer.parseInt(br.readLine());
@@ -41,6 +42,7 @@ public class BOJ3954 {
 			for (int i = 0; i < si; i++) {
 				input[i] = (int)temp[i];
 			}
+			temp = null;
 			i_idx = 0;
 			
 			Stack<Pair> a = new Stack<>();
@@ -73,17 +75,23 @@ public class BOJ3954 {
 					break;
 					
 				} else if (result == 1) {
-					i = a.pop().end;
+					Pair p = a.pop();
+					i = p.end;
+					p = null;
+					
 					if (i == sc - 1) {
 						isTerminate = true;
 						break;
 					}
+					
 				} else if (result == 2) {
 					i = a.peek().start;
 					
 				} else if (result == 0) {
 					if (c == ']') {
-						a.pop();
+						Pair p = a.pop();
+						p = null;
+				
 					}
 					if (i == sc - 1) {
 						isTerminate = true;
@@ -94,20 +102,28 @@ public class BOJ3954 {
 			if (isTerminate) {
 				sb.append(T).append(NEW_LINE);
 			} else {
+				Pair p;
 				while (a.size() != 1) {
-					a.pop();
+					p = a.pop();
+					p = null;
 				}
-				sb.append(L).append(a.peek().start).append(SPACE).append(a.peek().end).append(NEW_LINE);
-				
+				p = a.pop();
+				sb.append(L).append(p.start).append(SPACE).append(p.end).append(NEW_LINE);
+				p = null;
 			}
 			
 			data = null;
 			code = null;
 			input = null;
 			a = null;
+			Runtime.getRuntime().gc();
 		}
-		
+//		Runtime.getRuntime().gc();
+//		long used = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+//		System.out.println("used memory is: " + used + "bytes");
 		System.out.print(sb);
+		
+		br.close();
 	}
 	
 	public static int cmd(char ch) {
