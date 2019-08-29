@@ -12,7 +12,7 @@ public class SWEA1953 {
 	private static int[][] check;
 	
 	private static final int[][][] DIRECTIONS = {
-			{{0, 0}, {0, 0}, {0, 0} ,{0, 0}},
+			{{0, 0}},
 			{{1, 0}, {-1, 0}, {0, 1}, {0, -1}},
 			{{1, 0}, {-1, 0}},
 			{{0, 1}, {0, -1}},
