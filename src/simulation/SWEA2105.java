@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -51,7 +51,6 @@ public class SWEA2105 {
 		System.out.print(sb);
 	}
 	
-	// n에 들어가는 것 말고 중간에 들어가는 디저트 추가해야함.
 	public static void go(Node n, boolean[] desert, int[] count) {
 		if (start.row == n.row && start.col == n.col && count[3] != 0 && count[0] == count[2] && count[1] == count[3]) {
 			int temp = count[0] + count[1] + count[2] + count[3];
@@ -60,11 +59,6 @@ public class SWEA2105 {
 			}
 			return;
 		}
-//		System.out.println(n.row + " " + n.col);
-//		for (int i = 0; i < 4; i++) {
-//			System.out.print(count[i] + " ");
-//		}
-//		System.out.println();
 		
 		boolean[] d = desert.clone();
 		d[map[n.row][n.col]] = true;
@@ -81,7 +75,7 @@ public class SWEA2105 {
 						break;
 					}
 					
-					if (start.row != nextRow && start.col != nextCol) {
+					if (!(start.row == nextRow && start.col == nextCol)) {
 						if (d[map[nextRow][nextCol]]) {
 							break;
 						}
