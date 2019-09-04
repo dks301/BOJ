@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class SWEA2383 {
 	private static int N, mCnt;
-	private static boolean[] isDown, isDown1, isDown2;
+	private static boolean[] isDown;
 	private static int[][] map;
 	private static Stairs s1, s2;
 	
@@ -66,10 +66,20 @@ public class SWEA2383 {
 					c++;
 				}
 				
-				for (int i = 0; i < mCnt; i++) {
+				ans += c;
+				
+				if (v1.size() != 0) {
+					for (int i = 0; i < mCnt; i++) {
+						s2.cnt[i] += ans;
+					}
 					
-					s1.cnt[i] += c;
-					s2.cnt[i] += c;
+					int temp = ans;
+					while (temp-- > 0) {
+						
+					}
+					
+				} else if (v2.size() != 0) {
+					
 				}
 				s1.countDown();
 				s2.countDown();
