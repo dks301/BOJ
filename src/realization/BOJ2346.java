@@ -1,4 +1,4 @@
-package myPackage;
+package realization;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,20 +20,34 @@ public class BOJ2346 {
 		
 		StringBuilder sb = new StringBuilder();
 		int curIdx = 0;
-		while(ll.size() > 1) {
-			Balloon next = ll.remove(curIdx);
-			int nextIdx = curIdx + next.val - 1;
-			if (nextIdx < 0) {
-				nextIdx = ll.size() + nextIdx;
-			} else if (nextIdx >= ll.size()) {
-				nextIdx = nextIdx % ll.size();
+		while(!ll.isEmpty()) {
+			if (curIdx == ll.size()) {
+				curIdx = 0;
+			} else if (curIdx == -1) {
+				curIdx = ll.size() - 1;
 			}
-			
-			curIdx = nextIdx;
 			System.out.println(curIdx);
-			sb.append(next.idx + 1).append(SPACE);
+			Balloon cur = ll.remove(curIdx);
+			int cursor = curIdx;
+			if (cur.val > 0) {
+				for (int i = cur.val - 1; i > 0; i--) {
+					if (cursor > ll.size() - 1) {
+						cursor = 0;
+					}
+					cursor++;
+				}
+			} else {
+				for (int i = cur.val; i < 0; i++) {
+					if (cursor < 0) {
+						cursor = ll.size() - 1;
+					}
+					cursor--;
+				}
+			}
+			curIdx = cursor;
+			sb.append(cur.idx + 1).append(SPACE);
 		}
-		sb.append(ll.remove().idx + 1).append(SPACE);
+//		sb.append(ll.remove().idx + 1).append(SPACE);
 		System.out.println(sb);
 	}
 	
