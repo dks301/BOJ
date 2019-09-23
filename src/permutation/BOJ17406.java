@@ -37,7 +37,7 @@ public class BOJ17406 {
 		}
 		
 		ans = Integer.MAX_VALUE;
-		permutation(arr, 0, K, K);
+		//nextPermutation(arr, 0, K, K);
 		
 		System.out.println(ans);
 	}
@@ -94,32 +94,28 @@ public class BOJ17406 {
 		}
 	}
 	
-	public static void permutation(int[] arr, int depth, int n, int k) {
-		if (depth == k) {
-			int[][] result = new int[N + 1][M + 1];
-			for (int i = 1; i <= N; i++) {
-				for (int j = 1; j <= M; j++) {
-					result[i][j] = A[i][j];
-				}
-			}
-			
-			for (int i = 0; i < arr.length; i++) {
-				go(result, al.get(arr[i]));
-			}
-			
-			int val = calculation(result);
-			if (val < ans) {
-				ans = val;
-			}
-			return;
-		}
-		
-		for (int i = depth; i < n; i++) {
-			swap(arr, i, depth);
-			permutation(arr, depth + 1, n, k);
-			swap(arr, i, depth);
-		}
-	}
+//	public static boolean nextPermutation() {
+//		int i = N - 1;
+//		while (i > 0 && A[i - 1] >= A[i]) {
+//			i--;
+//		}
+//		if (i < 1) return false;
+//		
+//		int j = N - 1;
+//		while (A[j] <= A[i - 1]) {
+//			j--;
+//		}
+//		swap(i - 1, j);
+//		
+//		
+//		j = N - 1;
+//		while (i < j) {
+//			swap(i, j);
+//			i++;
+//			j--;
+//		}
+//		return true;
+//	}
 	
 	public static void swap(int[] arr, int i, int j) {
 		int temp = arr[i];
