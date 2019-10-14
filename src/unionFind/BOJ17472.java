@@ -1,7 +1,8 @@
-package myPackage;
+package unionFind;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -9,7 +10,8 @@ import java.util.StringTokenizer;
 public class BOJ17472 {
 	private static int N, M, ans;
 	private static int[][] map;
-	private static Bridge[] bridges;
+	private static int[] p;
+	private static ArrayList<Bridge> bridges;
 
 	private static final int[][] DIRECTIONS = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 	private static final int ROW = 0;
@@ -26,15 +28,17 @@ public class BOJ17472 {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < M; j++) {
 				map[i][j] = Integer.parseInt(st.nextToken());
+				if (map[i][j] == 1) {
+					map[i][j] = -1;
+				}
 			}
 		}
 
 		int island_cnt = 0;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				if (map[i][j] == 1) {
-					bfs(new Node(i, j), island_cnt + 3);
-					island_cnt++;
+				if (map[i][j] == -1) {
+					bfs(new Node(i, j), ++island_cnt);
 				}
 			}
 		}
@@ -44,31 +48,18 @@ public class BOJ17472 {
 			island[i] = i;
 		}
 		
-		bridges = new Bridge[island_cnt];
-		for (int i = 0; i < island_cnt; i++) {
-			bridges[i] = new Bridge(island_cnt);
-		}
+		bridges = new ArrayList<>();
 		
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(map[i][j] + " ");
+		for (int i = 1; i < island_cnt; i++) {
+			for (int j = i + 1; j <= island_cnt; j++) {
+				go(i, j);
 			}
-			System.out.println();
 		}
-		System.out.println();
 		
 		ans = Integer.MAX_VALUE;
-		permutation(island, 0, island_cnt, island_cnt);
 		
-		int bridges_cnt = 0;
-		for (int i = 0; i < island_cnt; i++) {
-			for (int j = 0; j < island_cnt; j++) {
-				if (bridges[i].island[j] != 100) {
-					bridges_cnt++;
-				}
-			}
-		}
-		System.out.println(bridges_cnt);
+		combination(new int[island_cnt - 1], 0, bridges.size(), island_cnt - 1, 0);
+		
 		System.out.println(ans == Integer.MAX_VALUE ? -1 : ans);
 	}
 
@@ -95,9 +86,7 @@ public class BOJ17472 {
 		}
 	}
 
-	public static int go(int from, int to) {
-		int len = Integer.MAX_VALUE;
-		
+	public static void go(int from, int to) {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				if (map[i][j] == from) {
@@ -113,11 +102,18 @@ public class BOJ17472 {
 							if (temp < 2) {
 								continue;
 							} else {
-								if (bridges[from - 3].island[to - 3] > temp) {
-									bridges[from - 3].island[to - 3] = temp;
+								boolean sw = false;
+								for (Bridge next : bridges) {
+									if (next.from == from && next.to == to) {
+										sw = true;
+										if (next.len > temp) {
+											next.len = temp;
+										}
+									}
 								}
-								if (temp < len) {
-									len = temp;
+								
+								if (!sw) {
+									bridges.add(new Bridge(from, to, temp));
 								}
 							}
 						}
@@ -126,46 +122,64 @@ public class BOJ17472 {
 				}
 			}
 		}
+	}
+	
+	public static void union(int[] p, int n1, int n2) {
+		int a = find(p, n1);
+		int b = find(p, n2);
+		
+		if (a != b) {
+			p[a] = b;
+		}
+	}
+	
+	public static int find(int[] p, int node) {
+		if (p[node] == node) {
+			return node;
+		} else {
+			return p[node] = find(p, p[node]);
+		}
+	}
+	
+	public static int check(int[] arr) {
+		int[] p = new int[arr.length + 1];
+		for (int i = 0; i < p.length; i++) {
+			p[i] = i;
+		}
+		
+		int len = 0;
+		for (int i = 0; i < arr.length; i++) {
+			Bridge b = bridges.get(arr[i]);
+			union(p, b.from - 1, b.to - 1);
+			len += b.len;
+		}
+		
+		for (int i = 0; i < p.length - 1; i++) {
+			if (find(p, i) != find(p, i + 1)) {
+				return -1;
+			}
+		}
 		
 		return len;
 	}
-
-	public static void permutation(int[] arr, int depth, int n, int k) {
-		if (depth == k) {
-			int total = 0;
-
-			for (int i = 0; i < arr.length - 1; i++) {
-				int len = go(arr[i] + 3, arr[i + 1] + 3);
-				if (len == Integer.MAX_VALUE) {
-					return;
-				} else {
-					total += len;
-				}
+	
+	public static void combination(int[] arr, int index, int n, int r, int target) {
+		if (r == 0) {
+			// do something
+			int val = check(arr);
+			if (val == -1) {
+				return;
+			} else if (val < ans){
+				ans = val;
 			}
-
-			if (total < ans) {
-				for (int i = 0; i < arr.length; i++) {
-					System.out.print((arr[i] + 3) + " ");
-				}
-				System.out.println();
-				System.out.println(total);
-				ans = total;
-			}
-
+			
+		} else if (target == n) {
 			return;
+		} else {
+			arr[index] = target;
+			combination(arr, index + 1, n, r - 1, target + 1);
+			combination(arr, index, n, r, target + 1);
 		}
-
-		for (int i = depth; i < n; i++) {
-			swap(arr, i, depth);
-			permutation(arr, depth + 1, n, k);
-			swap(arr, i, depth);
-		}
-	}
-
-	public static void swap(int[] arr, int i, int j) {
-		int temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
 	}
 
 	public static void bfs(Node n, int idx) {
@@ -183,7 +197,7 @@ public class BOJ17472 {
 					continue;
 				}
 
-				if (map[nextRow][nextCol] == 1) {
+				if (map[nextRow][nextCol] == -1) {
 					q.add(new Node(nextRow, nextCol));
 					map[nextRow][nextCol] = idx;
 				}
@@ -192,13 +206,13 @@ public class BOJ17472 {
 	}
 	
 	public static class Bridge {
-		int[] island;
+		int from, to;
+		int len;
 		
-		public Bridge(int nums) {
-			island = new int[nums];
-			for (int i = 0; i < nums; i++) {
-				island[i] = 100;
-			}
+		public Bridge(int from, int to, int len) {
+			this.from = from;
+			this.to = to;
+			this.len = len;
 		}
 	}
 	
