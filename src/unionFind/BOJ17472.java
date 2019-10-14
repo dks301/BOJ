@@ -41,11 +41,6 @@ public class BOJ17472 {
 				}
 			}
 		}
-
-		int[] island = new int[island_cnt];
-		for (int i = 0; i < island_cnt; i++) {
-			island[i] = i;
-		}
 		
 		bridges = new ArrayList<>();
 		
