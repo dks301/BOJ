@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 public class BOJ17472 {
 	private static int N, M, ans;
 	private static int[][] map;
-	private static int[] p;
 	private static ArrayList<Bridge> bridges;
 
 	private static final int[][] DIRECTIONS = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
@@ -154,8 +153,9 @@ public class BOJ17472 {
 			len += b.len;
 		}
 		
-		for (int i = 0; i < p.length - 1; i++) {
-			if (find(p, i) != find(p, i + 1)) {
+		int val = find(p, 0);
+		for (int i = 1; i < p.length; i++) {
+			if (find(p, i) != val) {
 				return -1;
 			}
 		}
