@@ -1,4 +1,4 @@
-package myPackage;
+package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,6 +11,8 @@ import java.util.StringTokenizer;
 public class SWEA5653 {
 	private static PriorityQueue<Cell> cellList;
 	private static Queue<Cell> tempCell;
+	private static int[][] map;
+	private static boolean[][] check;
 	
 	private static final int[][] DIRECTIONS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 	private static final int ROW = 0;
@@ -24,20 +26,26 @@ public class SWEA5653 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
 		
+		StringBuilder sb = new StringBuilder();
 		for (int t = 1; t <= T; t++) {
-			System.out.print(NUM + "" + t + " ");
+			sb.append(NUM).append(t).append(SPACE);
+			
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int N = Integer.parseInt(st.nextToken());
 			int M = Integer.parseInt(st.nextToken());
 			int K = Integer.parseInt(st.nextToken());
 			
 			cellList = new PriorityQueue<>();
+			map = new int[500][500];
+			check = new boolean[500][500];
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < M; j++) {
 					int temp = Integer.parseInt(st.nextToken());
+					map[i + 225][j + 225] = temp;
+					check[i + 225][j + 225] = true;
 					if (temp != 0) {
-						cellList.add(new Cell(i, j, temp));
+						cellList.add(new Cell(i + 225, j + 225, temp));
 					}
 				}
 			}
@@ -60,8 +68,9 @@ public class SWEA5653 {
 			}
 			
 			
-			System.out.println(ans);
+			sb.append(ans).append(NEW_LINE);
 		}
+		System.out.print(sb);
 	}
 	
 	public static class Cell implements Comparable<Cell>{
@@ -92,7 +101,7 @@ public class SWEA5653 {
 					
 				} else if (isActive) {
 					isDie = true;
-					count = life;
+					map[row][col] = -1;
 				}
 			}
 		}
@@ -102,19 +111,8 @@ public class SWEA5653 {
 				int nextRow = this.row + D[ROW];
 				int nextCol = this.col + D[COL];
 				
-				boolean isPossible = true;
-				for (Cell next : cellList) {
-					if (next.row == nextRow && next.col == nextCol) {
-						isPossible = false;
-					}
-				}
-				for (Cell next : tempCell) {
-					if (next.row == nextRow && next.col == nextCol) {
-						isPossible = false;
-					}
-				}
-				
-				if (isPossible) {
+				if (map[nextRow][nextCol] == 0) {
+					map[nextRow][nextCol] = this.life;
 					tempCell.add(new Cell(nextRow, nextCol, this.life));
 				}
 			}
