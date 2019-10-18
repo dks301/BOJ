@@ -2,13 +2,13 @@ package simulation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class SWEA5648 {
 	private static int N, ans;
 	private static int[][] check;
-	private static LinkedList<Atom> atoms;
+	private static ArrayList<Atom> atoms;
 
 	private static final int[][] DIRECTIONS = { { 0, 1 }, { 0, -1 }, { -1, 0 }, { 1, 0 } };
 	private static final int ROW = 0;
@@ -23,7 +23,7 @@ public class SWEA5648 {
 		int T = Integer.parseInt(br.readLine());
 		StringBuilder sb = new StringBuilder();
 		check = new int[4001][4001];
-		atoms = new LinkedList<>();
+		atoms = new ArrayList<>();
 		
 		for (int t = 1; t <= T; t++) {
 			sb.append(NUM).append(t).append(SPACE);
