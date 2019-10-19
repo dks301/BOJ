@@ -3,8 +3,7 @@ package simulation;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class BOJ9376 {
@@ -69,7 +68,7 @@ public class BOJ9376 {
 	}
 
 	public static void bfs(Node n, int idx) {
-		Queue<Node> q = new LinkedList<>();
+		PriorityQueue<Node> q = new PriorityQueue<>();
 		q.add(n);
 		check[idx][n.row][n.col] = 1;
 
@@ -93,15 +92,6 @@ public class BOJ9376 {
 							q.add(new Node(nextRow, nextCol, n.val));
 							check[idx][nextRow][nextCol] = check[idx][n.row][n.col];
 						}
-					} else if (check[idx][nextRow][nextCol] > check[idx][n.row][n.col]) {
-						if (map[nextRow][nextCol] == DOOR && check[idx][nextRow][nextCol] > check[idx][n.row][n.col] + 1) {
-							q.add(new Node(nextRow, nextCol, n.val + 1));
-							check[idx][nextRow][nextCol] = check[idx][n.row][n.col] + 1;
-
-						} else if (map[nextRow][nextCol] != DOOR) {
-							q.add(new Node(nextRow, nextCol, n.val));
-							check[idx][nextRow][nextCol] = check[idx][n.row][n.col];
-						}						
 					}
 				}
 			}
