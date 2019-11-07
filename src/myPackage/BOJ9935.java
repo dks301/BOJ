@@ -19,18 +19,136 @@ import java.io.InputStreamReader;
  * 폭발이 끝난 후 남는 문자열 출력 남아있는 문자가 없으면 "FRULA"출력
  */
 public class BOJ9935 {
+	private static char[] bomb;
+	private static int len;
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String str = br.readLine();
-		String bomb = br.readLine();
+		bomb = br.readLine().toCharArray();
+		len = bomb.length;
 		
-		while (str.contains(bomb)) {
-			str = str.replaceAll(bomb, "");
-		}
-		if (str.isEmpty()) {
+		String ans = solution(str);
+		if (ans.equals("")) {
 			System.out.println("FRULA");
 		} else {
-			System.out.println(str);
+			System.out.println(ans);
+		}
+	}
+	
+	public static String solution(String cryptogram) {
+		LinkedList cryptoList = new LinkedList();
+		char[] cryptos = cryptogram.toCharArray();
+		
+		for (int i = 0; i < cryptos.length; i++) {
+			cryptoList.add(new Node(cryptos[i]));
+			System.out.println(cryptoList.toString());
+		}
+
+		return cryptoList.toString();
+	}
+	
+	public static class LinkedList {
+		Node head, tail;
+		
+		public LinkedList() {
+			head = new Node('*');
+			tail = null;
+		}
+		
+		@Override
+		public String toString() {
+			String result = "";
+			Node n = head.clone();
+			if (isEmpty()) {
+				return result;
+				
+			} else {
+				while (n.next != null) {
+					n = n.next;
+					result += n.val;
+				}
+				return result;
+			}
+		}
+		
+		public void add(Node n) {
+			if (this.isEmpty()) {
+				head.next = n;
+				n.prev = head;
+				n.next = null;
+				tail = n.clone();
+				
+			} else {
+				if (n.val == bomb[len - 1]) {
+					if (check(tail.clone())) {
+						for (int i = 0; i < len - 2; i++) {
+							tail = tail.prev;
+						}
+						tail.prev.next = null;
+						
+					} else {
+						Node temp = tail.clone();
+						temp.next = n;
+						n.prev = temp;
+						tail = n.clone();
+						
+					}
+					
+				} else {
+					Node temp = tail.clone();
+					temp.next = n;
+					n.prev = temp;
+					tail = n.clone();
+				}
+			}
+		}
+		
+		public boolean isEmpty() {
+			if (head.next == null) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		public Node searchLast() {
+			Node n = head.clone();
+			
+			while (n.next != null) {
+				n = n.next;
+			}
+			
+			return n;
+		}
+		
+		public boolean check(Node a) {
+			for (int i = len - 2; i >= 0; i--) {
+				if (a.val == bomb[i]) {
+					a = a.prev;
+				} else {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	
+	public static class Node {
+		char val;
+		Node prev, next;
+		
+		public Node(char val) {
+			this.val = val;
+			prev = next = null;
+		}
+		
+		public Node clone() {
+			Node n = new Node(this.val);
+			n.prev = prev;
+			n.next = next;
+			
+			return n;
 		}
 	}
 }
