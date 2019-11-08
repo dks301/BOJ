@@ -38,7 +38,11 @@ public class Woo6 {
 			String action = st.nextToken();
 			long time = toSecond(st.nextToken());
 			if (action.equals("leave")) {
-				logQueue.remove();
+				long diff = time - logQueue.remove().time;
+				if (diff == 60 && !alreadyTicketing(answerList, id)) {
+					answerList.add(id);
+					totalTicket--;
+				}
 				continue;
 			}
 			
