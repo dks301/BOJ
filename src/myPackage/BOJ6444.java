@@ -3,6 +3,7 @@ package myPackage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -13,7 +14,6 @@ public class BOJ6444 {
 	private static final char NEW_LINE = '\n';
 	private static final int RR = 19000;
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -23,10 +23,11 @@ public class BOJ6444 {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int M = Integer.parseInt(st.nextToken()); // col
 			int N = Integer.parseInt(st.nextToken()); // row
-			int[][] indegree = new int[N][M];
+
 			Queue<Integer> q = new LinkedList<>();
 			int[][] ss = new int[N][M];
-			ArrayList<Integer>[][] adjList = new ArrayList[N][M];
+			HashMap<Integer, ArrayList<Integer>> adjMap = new HashMap<>();
+			HashMap<Integer, Short> indegree = new HashMap<>();
 
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
@@ -35,17 +36,23 @@ public class BOJ6444 {
 					if (isNumeric(temp)) {
 						ss[i][j] = Integer.parseInt(temp);
 						q.add(i * RR + j);
+						
 					} else {
 						StringTokenizer st2 = new StringTokenizer(temp, "+");
-						int size = st2.countTokens();
-						indegree[i][j] = size;
+						int cnt = st2.countTokens();
 						int n = i * RR + j;
-						while (st2.hasMoreTokens()) {
+						
+						indegree.put(n, (short) cnt);
+						for (int k = 0; k < cnt; k++) {
 							int[] rc = findRowCol(st2.nextToken());
-							if (adjList[rc[0]][rc[1]] == null) {
-								adjList[rc[0]][rc[1]] = new ArrayList<>();
+							int from = rc[0] * RR + rc[1];
+							if (!adjMap.containsKey(from)) {
+								ArrayList<Integer> al = new ArrayList<>();
+								al.add(n);
+								adjMap.put(from, al);
+							} else {
+								adjMap.get(from).add(n);
 							}
-							adjList[rc[0]][rc[1]].add(n);
 						}
 					}
 				}
@@ -56,19 +63,24 @@ public class BOJ6444 {
 				int row = n / RR;
 				int col = n % RR;
 
-				if (adjList[row][col] != null) {
-					for (int i = 0; i < adjList[row][col].size(); i++) {
-						int next = adjList[row][col].get(i);
-						int nRow = next / RR;
-						int nCol = next % RR;
-						indegree[nRow][nCol]--;
-						ss[nRow][nCol] += ss[row][col];
-						if (indegree[nRow][nCol] == 0) {
+				if (adjMap.containsKey(n)) {
+					ArrayList<Integer> al = adjMap.get(n);
+					for (int next : al) {
+						int nextRow = next / RR;
+						int nextCol = next % RR;
+						short idg = (short) (indegree.get(next) - 1);
+						
+						ss[nextRow][nextCol] += ss[row][col];
+						if (idg == 0) {
+							indegree.remove(next);
 							q.add(next);
+						} else {
+							indegree.put(next, idg);
 						}
 					}
-
-					adjList[row][col] = null;
+					
+					al.clear();
+					adjMap.remove(n);
 				}
 			}
 
@@ -123,21 +135,4 @@ public class BOJ6444 {
 			return false;
 		}
 	}
-	//
-	// public static class SpreadSheet {
-	// int[][] sheets;
-	//
-	// public SpreadSheet(int row, int col) {
-	// sheets = new int[row][col];
-	// }
-	// }
-
-	// public static class Node {
-	// int row, col;
-	//
-	// public Node(int row, int col) {
-	// this.row = row;
-	// this.col = col;
-	// }
-	// }
 }
