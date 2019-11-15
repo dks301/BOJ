@@ -13,6 +13,9 @@ public class BOJ6444 {
 	private static final char SPACE = ' ';
 	private static final char NEW_LINE = '\n';
 	private static final int RR = 19000;
+	private static int[][] ss;
+	private static HashMap<Integer, Integer> indegree;
+	private static ArrayList<Integer>[][] adjList;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,65 +26,65 @@ public class BOJ6444 {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int M = Integer.parseInt(st.nextToken()); // col
 			int N = Integer.parseInt(st.nextToken()); // row
-
-			Queue<Integer> q = new LinkedList<>();
-			int[][] ss = new int[N][M];
-			HashMap<Integer, ArrayList<Integer>> adjMap = new HashMap<>();
-			HashMap<Integer, Short> indegree = new HashMap<>();
-
+			ss = new int[N][M];
+			indegree = new HashMap<>();
+			adjList = new ArrayList[N][M];
+			
+			
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < M; j++) {
 					String temp = st.nextToken();
 					if (isNumeric(temp)) {
 						ss[i][j] = Integer.parseInt(temp);
-						q.add(i * RR + j);
-						
+						indegree.put(i * RR + j, 0);
+
 					} else {
 						StringTokenizer st2 = new StringTokenizer(temp, "+");
 						int cnt = st2.countTokens();
 						int n = i * RR + j;
-						
-						indegree.put(n, (short) cnt);
+						indegree.put(i * RR + j, cnt);
+
 						for (int k = 0; k < cnt; k++) {
 							int[] rc = findRowCol(st2.nextToken());
-							int from = rc[0] * RR + rc[1];
-							if (!adjMap.containsKey(from)) {
-								ArrayList<Integer> al = new ArrayList<>();
-								al.add(n);
-								adjMap.put(from, al);
-							} else {
-								adjMap.get(from).add(n);
+							if (adjList[rc[0]][rc[1]] == null) {
+								adjList[rc[0]][rc[1]] = new ArrayList<>();
 							}
+							
+							adjList[rc[0]][rc[1]].add(n);
 						}
 					}
 				}
 			}
-
+			
+			Queue<Integer> q = new LinkedList<>();
+			
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < M; j++) {
+					if (adjList[i][j] != null && indegree.get(i * RR + j) == 0) {
+						q.add(i * RR + j);
+						indegree.remove(i * RR + j);
+					}
+				}
+			}
+			
 			while (!q.isEmpty()) {
 				int n = q.remove();
-				int row = n / RR;
-				int col = n % RR;
-
-				if (adjMap.containsKey(n)) {
-					ArrayList<Integer> al = adjMap.get(n);
-					for (int next : al) {
-						int nextRow = next / RR;
-						int nextCol = next % RR;
-						short idg = (short) (indegree.get(next) - 1);
-						
-						ss[nextRow][nextCol] += ss[row][col];
-						if (idg == 0) {
-							indegree.remove(next);
-							q.add(next);
-						} else {
-							indegree.put(next, idg);
-						}
+				int fromRow = n / RR;
+				int fromCol = n % RR;
+				
+				for (int to : adjList[fromRow][fromCol]) {
+					int toRow = to / RR;
+					int toCol = to % RR;
+					ss[toRow][toCol] += ss[fromRow][fromCol];
+					indegree.put(to, indegree.get(to) - 1);
+					if (adjList[toRow][toCol] != null && indegree.get(to) == 0) {
+						q.add(to);
+						indegree.remove(to);
 					}
-					
-					al.clear();
-					adjMap.remove(n);
 				}
+				
+				adjList[fromRow][fromCol] = null;
 			}
 
 			for (int i = 0; i < N; i++) {
